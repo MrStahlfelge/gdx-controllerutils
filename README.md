@@ -5,7 +5,7 @@ Utilitys for using controllers with libGDX
 ## Subprojects
 
 ### core-mapping
-Configureable mappings for game controlelrs
+Configureable mappings for game controllers
 
 ### core-scene2d
 Key and button supporting Stage with focussable Actors for Scene2d

@@ -10,6 +10,6 @@ sourceSets.test.java.srcDirs = [ "test/" ]
 
 
 ext {
-	ARTIFACTID = 'gdx-controllerutils-core-scene2d'
+	ARTIFACTID = 'gdx-controllerutils-scene2d'
 }
 
