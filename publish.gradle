@@ -82,14 +82,14 @@ afterEvaluate { project ->
 
 
                 pom.project {
-                    name 'gdx-mygdxextension'
-                    description 'gdx-mygdxextension description'
-                    url 'https://github.com/TomGrill/my-gdx-extension'
+                    name 'gdx-controllerutils'
+                    description 'Game Controller Utilities for libGDX'
+                    url 'https://github.com/MrStahlfelge/gdx-controllerutils'
 
                     scm {
-                        url 'scm:git@github.com:TomGrill/my-gdx-extension.git'
-                        connection 'scm:git@github.com:TomGrill/my-gdx-extension.git'
-                        developerConnection 'scm:git@github.com:TomGrill/my-gdx-extension.git'
+                        url 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
+                        connection 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
+                        developerConnection 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
                     }
 
                     licenses {
@@ -102,9 +102,9 @@ afterEvaluate { project ->
 
                     developers {
                         developer {
-                            id 'tomgrill'
-                            name 'Thomas Pronold'
-                            email 'mail@tomgrill.de'
+                            id 'MrStahlfelge'
+                            name 'Benjamin Schulte'
+                            email 'lightblocks@golfgl.de'
                         }
                     }
                 }

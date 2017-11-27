@@ -1,7 +1,3 @@
-include ':android'
-include ':core'
-include ':desktop'
-include ':html'
-include ':ios'
-include ':ios-moe'
-
+include ':android', ':core-mapping'
+include ':core-scene2d'
+include ':desktop-jamepad'

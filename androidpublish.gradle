@@ -82,7 +82,7 @@ uploadArchives {
 
             pom.project {
                 name 'gdx-controllerutils'
-                description 'gdx-Controller Utilitys for libGDX'
+                description 'Game Controller Utilities for libGDX'
                 url 'https://github.com/MrStahlfelge/gdx-controllerutils'
 
                 scm {

@@ -58,14 +58,13 @@ project(":android") {
     }
 
     dependencies {
-        compile project(':core')
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
 
     }
 }
 
 
-project(":core") {
+project(":core-scene2d") {
     apply plugin: 'java'
 
     apply from: '../publish.gradle'
@@ -77,7 +76,7 @@ project(":core") {
 
     eclipse {
         project {
-            name = appName + "-core"
+            name = appName + "-core-scene2d"
         }
     }
 
@@ -89,7 +88,7 @@ project(":core") {
 
 
 
-project(":desktop") {
+project(":core-mapping") {
     apply plugin: 'java'
 
     apply from: '../publish.gradle'
@@ -101,48 +100,20 @@ project(":desktop") {
 
     eclipse {
         project {
-            name = appName + "-desktop"
+            name = appName + "-core-mapping"
         }
     }
 
     dependencies {
-        compile project(':core')
-    }
-}
-
-
-project(":html") {
-    apply plugin: 'java'
-
-
-    apply from: '../publish.gradle'
-
-    configurations {
-        custom
-        compile.extendsFrom custom
-    }
-
-    eclipse {
-        project {
-            name = appName + "-html"
-        }
-    }
-
-    dependencies {
-        compile project(':core')
-    }
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
     }
 }
 
 
 
-project(":ios") {
+
+project(":desktop-jamepad") {
     apply plugin: 'java'
-    apply plugin: 'robovm'
 
     apply from: '../publish.gradle'
 
@@ -153,46 +124,12 @@ project(":ios") {
 
     eclipse {
         project {
-            name = appName + "-ios"
+            name = appName + "-desktop-jamepad"
         }
     }
 
     dependencies {
-
-        compile project(':core')
-
-        compile "com.mobidevelop.robovm:robovm-rt:${roboVMVersion}"
-        compile "com.mobidevelop.robovm:robovm-cocoatouch:${roboVMVersion}"
-        compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
-
-    }
-}
-
-
-project(":ios-moe") {
-    apply plugin: 'java'
-    apply plugin: 'moe'
-
-
-    apply from: '../publish.gradle'
-
-    configurations {
-        custom
-        compile.extendsFrom custom
-        natives
-    }
-
-    eclipse {
-        project {
-            name = appName + "-ios-moe"
-        }
-    }
-
-    dependencies {
-
-        compile project(':core')
-
-        compile "com.badlogicgames.gdx:gdx-backend-moe:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
     }
 }

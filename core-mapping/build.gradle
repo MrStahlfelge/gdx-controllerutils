@@ -10,6 +10,6 @@ sourceSets.test.java.srcDirs = [ "test/" ]
 
 
 ext {
-	ARTIFACTID = 'gdx-mygdxextension-core'
+	ARTIFACTID = 'gdx-controllerutils-core-mapping'
 }
 
