@@ -32,7 +32,7 @@ public class ConfiguredInput {
         /**
          * a digital axis is an axis that gives you values -1, 0 or +1. Mapping can use
          * an analog axis, dpad or normal buttons for this. If an analog axis is used, a treshold value of default
-         * 0.5 is 0 and of > 0.8 is 1. Between old value is used.
+         * 0.5 is 0 and of &gt; 0.8 is 1. Between old value is used.
          */
         axisDigital
     }

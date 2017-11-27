@@ -548,11 +548,10 @@ public class ControllerMappings {
         }
 
         /**
-         * returns mapped input for a configuration id, if present
+         * returns mapped input for a configuration id, if present. If no no mapping set, an Exception is thrown.
          *
          * @param configuredId configuration id
          * @return MappedInput
-         * @throws Exception when no mapping set
          */
         public MappedInput getMappedInput(int configuredId) {
             return mappingsByConfigured.get(configuredId);

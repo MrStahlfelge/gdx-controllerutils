@@ -4,7 +4,18 @@ Utilitys for using controllers with libGDX
 
 ## Subprojects
 
+### core-mapping
+Configureable mappings for game controlelrs
+
+### core-scene2d
+Key and button supporting Stage with focussable Actors for Scene2d
+
+### desktop-jamepad
+[Jamepad](https://github.com/williamahartman/Jamepad) implementation agains libGDX' controller interface. Brings hotplugging on Lwjgl2!
+
 ## Installation
+
+(Not yet on Maven, build yourself)
 
 ### Building from source
 To build from source, clone or download this repository, then open it in Android Studio. Perform the following command to compile and upload the library in your local repository:
@@ -14,6 +25,8 @@ To build from source, clone or download this repository, then open it in Android
 See `build.gradle` file for current version to use in your dependencies.
 
 ## Usage 
+
+To come.
 
 ## Updates & News
 Follow me to receive release updates about this
