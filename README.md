@@ -15,7 +15,7 @@ Support configurable mappings for game controllers in your projects.
 ### core-scene2d
 Key and button supporting Stage with focusable Actors for Scene2d. This is also usable in games without Game Controller support.
 
-[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operatable-Scene2d)
+[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d)
 
 ### desktop-jamepad
 [Jamepad](https://github.com/williamahartman/Jamepad) implementation agains libGDX' controller interface. Brings hotplugging on Lwjgl2!
@@ -25,6 +25,9 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 ## Installation
 
 Just add the needed dependencies to your project. You will find further information on the subproject's wiki sites.
+
+Current snapshot version is:
+`cuversion = '0.1.0-SNAPSHOT'`
 
 ### Building from source
 To build from source, clone or download this repository, then open it in Android Studio. Perform the following command to compile and upload the library in your local repository:
