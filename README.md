@@ -4,18 +4,27 @@ Utilitys for using controllers with libGDX
 
 ## Subprojects
 
+All subprojects are technically independant, you can use only one of them in your project. They are bundled in a single Github project because all have something to do with Game Controller Input and libGDX.
+
+
 ### core-mapping
-Configureable mappings for game controllers
+Support configurable mappings for game controllers in your projects.
+
+[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Configurable-Game-Controller-Mappings)
 
 ### core-scene2d
-Key and button supporting Stage with focussable Actors for Scene2d
+Key and button supporting Stage with focusable Actors for Scene2d. This is also usable in games without Game Controller support.
+
+[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operatable-Scene2d)
 
 ### desktop-jamepad
 [Jamepad](https://github.com/williamahartman/Jamepad) implementation agains libGDX' controller interface. Brings hotplugging on Lwjgl2!
 
+(Future work)
+
 ## Installation
 
-(Not yet on Maven, build yourself)
+Just add the needed dependencies to your project. You will find further information on the subproject's wiki sites.
 
 ### Building from source
 To build from source, clone or download this repository, then open it in Android Studio. Perform the following command to compile and upload the library in your local repository:
@@ -23,10 +32,6 @@ To build from source, clone or download this repository, then open it in Android
     gradlew clean uploadArchives -PLOCAL=true
     
 See `build.gradle` file for current version to use in your dependencies.
-
-## Usage 
-
-To come.
 
 ## Updates & News
 Follow me to receive release updates about this
