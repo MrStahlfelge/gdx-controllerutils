@@ -22,12 +22,20 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 
 (Future work)
 
+## Demo
+
+See core-mapping and core-scene2d in action in my game Secret Chronicles: [Web](https://www.kongregate.com/games/MrStahlfelge/secret-chronicles-classic-platformer) [Android](https://www.amazon.com/gp/mas/dl/android?p=de.golfgl.smc.android)
+
 ## Installation
 
-Just add the needed dependencies to your project. You will find further information on the subproject's wiki sites.
+This project is published to the Sonatype Maven repository. You can integrate the lib into your project by just adding the dependencies to your `build.gradle` file.
 
-Current snapshot version is:
-`cuversion = '0.1.0-SNAPSHOT'`
+Define the version of this API right after the gdxVersion:
+
+    gdxVersion = '1.9.6'
+    cuversion = '0.1.0-SNAPSHOT'
+
+Then add the needed dependencies to your project. You will find the artifact ids on the subproject's wiki sites.
 
 ### Building from source
 To build from source, clone or download this repository, then open it in Android Studio. Perform the following command to compile and upload the library in your local repository:
