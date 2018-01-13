@@ -55,17 +55,17 @@ public class ControllerMenuStage extends Stage {
         if (actor != null && !isActorFocussable(actor))
             return false;
 
-        if (focussedActor != null) {
-            Actor oldFocussed = focussedActor;
+        Actor oldFocussed = focussedActor;
+        if (oldFocussed != null) {
             focussedActor = null;
-            onFocusLost(oldFocussed);
+            onFocusLost(oldFocussed, actor);
         }
 
         // focussedActor kann durch onFocusLost->touchCancel verändert worden sein, dann nicht neu setzen
         if (focussedActor == null) {
             focussedActor = actor;
             if (focussedActor != null)
-                onFocusGained(focussedActor);
+                onFocusGained(focussedActor, oldFocussed);
         }
 
         return true;
@@ -80,8 +80,8 @@ public class ControllerMenuStage extends Stage {
      *
      * @param focussedActor the actor that gained focus
      */
-    protected void onFocusGained(Actor focussedActor) {
-        fireEventOnActor(focussedActor, InputEvent.Type.enter);
+    protected void onFocusGained(Actor focussedActor, Actor oldFocussed) {
+        fireEventOnActor(focussedActor, InputEvent.Type.enter, -1, oldFocussed);
         setKeyboardFocus(focussedActor);
         setScrollFocus(focussedActor);
     }
@@ -91,13 +91,13 @@ public class ControllerMenuStage extends Stage {
      *
      * @param focussedActor the actor that lost focus
      */
-    protected void onFocusLost(Actor focussedActor) {
+    protected void onFocusLost(Actor focussedActor, Actor newFocussed) {
         if (isPressed) {
             cancelTouchFocus();
             isPressed = false;
         }
 
-        fireEventOnActor(focussedActor, InputEvent.Type.exit);
+        fireEventOnActor(focussedActor, InputEvent.Type.exit, -1, newFocussed);
     }
 
     protected boolean isActorFocussable(Actor actor) {
@@ -143,10 +143,10 @@ public class ControllerMenuStage extends Stage {
         else if (isGoRightKeyCode(keyCode))
             handled = moveFocusByDirection(MoveFocusDirection.east);
         else if (isDefaultActionKeyCode(keyCode)) {
-            handled = fireEventOnActor(focussedActor, InputEvent.Type.touchDown);
+            handled = fireEventOnActor(focussedActor, InputEvent.Type.touchDown, 1, null);
             isPressed = handled;
         } else if (isEscapeActionKeyCode(keyCode) && escapeActor != null) {
-            handled = fireEventOnActor(escapeActor, InputEvent.Type.touchDown);
+            handled = fireEventOnActor(escapeActor, InputEvent.Type.touchDown, 1, null);
             isPressed = handled;
         } else
             handled = false;
@@ -162,9 +162,9 @@ public class ControllerMenuStage extends Stage {
         boolean handled;
         if (isDefaultActionKeyCode(keyCode)) {
             isPressed = false;
-            handled = fireEventOnActor(focussedActor, InputEvent.Type.touchUp);
+            handled = fireEventOnActor(focussedActor, InputEvent.Type.touchUp, 1, null);
         } else if (isEscapeActionKeyCode(keyCode) && escapeActor != null) {
-            handled = fireEventOnActor(escapeActor, InputEvent.Type.touchUp);
+            handled = fireEventOnActor(escapeActor, InputEvent.Type.touchUp, 1, null);
             isPressed = handled;
         } else
             handled = false;
@@ -231,15 +231,15 @@ public class ControllerMenuStage extends Stage {
         return (keyCode == Input.Keys.DOWN);
     }
 
-    protected boolean fireEventOnActor(Actor actor, InputEvent.Type type) {
+    protected boolean fireEventOnActor(Actor actor, InputEvent.Type type, int pointer, Actor related) {
         if (actor == null || !isActorFocussable(actor) || !isActorHittable(actor))
             return false;
 
         InputEvent event = Pools.obtain(InputEvent.class);
         event.setType(type);
         event.setStage(this);
-        event.setRelatedActor(actor);
-        event.setPointer(1);
+        event.setRelatedActor(related);
+        event.setPointer(pointer);
         event.setButton(-1);
 
         actor.fire(event);
@@ -276,10 +276,10 @@ public class ControllerMenuStage extends Stage {
 
                 boolean isInDirection = false;
 
-                isInDirection = (direction == MoveFocusDirection.south && currentActorPos.y < focussedPosition.y)
-                        || (direction == MoveFocusDirection.north && currentActorPos.y > focussedPosition.y)
-                        || (direction == MoveFocusDirection.west && currentActorPos.x < focussedPosition.x)
-                        || (direction == MoveFocusDirection.east && currentActorPos.x > focussedPosition.x);
+                isInDirection = (direction == MoveFocusDirection.south && currentActorPos.y <= focussedPosition.y)
+                        || (direction == MoveFocusDirection.north && currentActorPos.y >= focussedPosition.y)
+                        || (direction == MoveFocusDirection.west && currentActorPos.x <= focussedPosition.x)
+                        || (direction == MoveFocusDirection.east && currentActorPos.x >= focussedPosition.x);
 
                 if (isInDirection && isActorHittable(currentActor)) {
                     float currentDist = currentActorPos.dst2(focussedPosition);
