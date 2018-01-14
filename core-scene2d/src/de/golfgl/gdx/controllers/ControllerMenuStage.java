@@ -14,8 +14,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 public class ControllerMenuStage extends Stage {
+    private final Vector2 controllerTempCoords = new Vector2();
     private Array<Actor> focussableActors = new Array<>();
     private boolean isPressed;
+    private boolean focusOnTouchdown = true;
     private Actor focussedActor;
     private Actor escapeActor;
 
@@ -23,10 +25,25 @@ public class ControllerMenuStage extends Stage {
         super(viewport);
     }
 
+    public boolean isFocusOnTouchdown() {
+        return focusOnTouchdown;
+    }
+
+    /**
+     * @param focusOnTouchdown activate if a click or tap on a focussable actor should set the controller focus to this
+     *                         actor. Default is true
+     */
+    public void setFocusOnTouchdown(boolean focusOnTouchdown) {
+        this.focusOnTouchdown = focusOnTouchdown;
+    }
+
     public Actor getEscapeActor() {
         return escapeActor;
     }
 
+    /**
+     * @param escapeActor the actor that should receive a touch event when escape key is pressed
+     */
     public void setEscapeActor(Actor escapeActor) {
         this.escapeActor = escapeActor;
     }
@@ -48,6 +65,12 @@ public class ControllerMenuStage extends Stage {
         return focussableActors;
     }
 
+    /**
+     * sets the currently focussed actor
+     *
+     * @param actor
+     * @return
+     */
     public boolean setFocussedActor(Actor actor) {
         if (focussedActor == actor)
             return true;
@@ -100,6 +123,12 @@ public class ControllerMenuStage extends Stage {
         fireEventOnActor(focussedActor, InputEvent.Type.exit, -1, newFocussed);
     }
 
+    /**
+     * checks if the given actor is focussable: in the list of focussable actors, visible, touchable, and on the stage
+     *
+     * @param actor
+     * @return true if focussable
+     */
     protected boolean isActorFocussable(Actor actor) {
         if (!focussableActors.contains(actor, true))
             return false;
@@ -173,6 +202,25 @@ public class ControllerMenuStage extends Stage {
             handled = super.keyUp(keyCode);
 
         return handled;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // wenn der Actor den fokus kriegen kann, dann kriegt er ihn hiermit auch
+        if (isFocusOnTouchdown()) {
+            screenToStageCoordinates(controllerTempCoords.set(screenX, screenY));
+            Actor target = hit(controllerTempCoords.x, controllerTempCoords.y, true);
+            if (target != null) {
+                if (isActorFocussable(target))
+                    setFocussedActor(target);
+                else for (Actor actor : getFocussableActors()) {
+                    if (target.isDescendantOf(actor))
+                        setFocussedActor(actor);
+                }
+            }
+        }
+
+        return super.touchDown(screenX, screenY, pointer, button);
     }
 
     /**
