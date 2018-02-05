@@ -10,6 +10,10 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
+ * A stage with support for button or key control
+ * <p>
+ * See https://github.com/MrStahlfelge/gdx-controllerutils for more information
+ * <p>
  * Created by Benjamin Schulte on 04.11.2017.
  */
 
@@ -297,10 +301,28 @@ public class ControllerMenuStage extends Stage {
         return handled;
     }
 
-    private boolean moveFocusByDirection(MoveFocusDirection direction) {
+    /**
+     * moves the focus in the given direction, is applicable
+     *
+     * @param direction
+     * @return true if an action was perforemd
+     */
+    protected boolean moveFocusByDirection(MoveFocusDirection direction) {
         if (focussedActor == null)
             return false;
 
+        Actor nearestInDirection = findNearestFocussableNeighbour(direction);
+
+        // check for scrollable parents
+        boolean hasScrolled = checkForScrollable(direction, nearestInDirection);
+
+        if (!hasScrolled && nearestInDirection != null)
+            return setFocussedActor(nearestInDirection);
+        else
+            return hasScrolled;
+    }
+
+    private Actor findNearestFocussableNeighbour(MoveFocusDirection direction) {
         Vector2 focussedPosition = focussedActor.localToStageCoordinates(
                 new Vector2(direction == MoveFocusDirection.east ? focussedActor.getWidth() :
                         direction == MoveFocusDirection.west ? 0 : focussedActor.getWidth() / 2,
@@ -340,11 +362,38 @@ public class ControllerMenuStage extends Stage {
 
             }
         }
+        return nearestInDirection;
+    }
 
-        if (nearestInDirection != null)
-            setFocussedActor(nearestInDirection);
+    /**
+     * checks if a IControllerScrollable actor should scroll instead of focussing nearest neighbour
+     *
+     * @param direction
+     * @param nearestInDirection may be null
+     * @return true if a scroll was performed
+     */
+    protected boolean checkForScrollable(MoveFocusDirection direction, Actor nearestInDirection) {
+        Actor findScrollable = focussedActor;
 
-        return (nearestInDirection != null);
+        while (findScrollable != null && !(findScrollable instanceof IControllerScrollable))
+            findScrollable = findScrollable.getParent();
+
+        if (findScrollable == null)
+            return false;
+
+        // we found a scrollable... but if the nearest actor in direction is also child of this one, it shouldn't
+        // scroll
+        if (nearestInDirection != null) {
+            Actor nearestNeighboursParent = nearestInDirection;
+            while (nearestNeighboursParent != null && nearestNeighboursParent != findScrollable)
+                nearestNeighboursParent = nearestNeighboursParent.getParent();
+
+            if (nearestNeighboursParent == findScrollable)
+                return false;
+        }
+
+        // ok - now we scroll!
+        return ((IControllerScrollable) findScrollable).scroll(direction);
     }
 
     @Override
