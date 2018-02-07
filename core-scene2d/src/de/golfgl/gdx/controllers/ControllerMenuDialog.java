@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
  */
 
 public class ControllerMenuDialog extends Dialog {
-    protected Array<Button> buttonsToAdd = new Array<>();
+    protected Array<Actor> buttonsToAdd = new Array<>();
     protected Actor previousFocussedActor;
     protected Actor previousEscapeActor;
 
@@ -31,7 +31,7 @@ public class ControllerMenuDialog extends Dialog {
 
     @Override
     public Dialog button(Button button, Object object) {
-        buttonsToAdd.add(button);
+        addFocusableActor(button);
         if (getStage() != null && getStage() instanceof ControllerMenuStage)
             ((ControllerMenuStage) getStage()).addFocussableActor(button);
         return super.button(button, object);
@@ -63,15 +63,27 @@ public class ControllerMenuDialog extends Dialog {
             previousFocussedActor = ((ControllerMenuStage) stage).getFocussedActor();
             previousEscapeActor = ((ControllerMenuStage) stage).getEscapeActor();
 
-            if (buttonsToAdd.size >= 1)
-                ((ControllerMenuStage) stage).setFocussedActor(buttonsToAdd.get(0));
-
-            if (buttonsToAdd.size == 1)
-                ((ControllerMenuStage) stage).setEscapeActor(buttonsToAdd.get(0));
+            ((ControllerMenuStage) stage).setFocussedActor(getConfiguredDefaultActor());
+            ((ControllerMenuStage) stage).setEscapeActor(getConfiguredEscapeActor());
         }
 
         return this;
 
+    }
+
+    /**
+     * @return Actor that should get the focus when the dialog is shown
+     */
+    protected Actor getConfiguredDefaultActor() {
+        return buttonsToAdd.size >= 1 ? buttonsToAdd.get(0) : null;
+    }
+
+    /**
+     *
+     * @return Actor that should take Action when the escape button is hit while the dialog is shown
+     */
+    protected Actor getConfiguredEscapeActor() {
+        return buttonsToAdd.size == 1 ? buttonsToAdd.get(0) : null;
     }
 
     @Override
@@ -88,5 +100,16 @@ public class ControllerMenuDialog extends Dialog {
         }
 
         super.hide(action);
+    }
+
+    /**
+     * Call this for every actor that can be focussed by keys. The actors will be added to the Stage's focusable
+     * actors when the dialog is added to a Stage, and removed from Stage's focusable Actors when the dialog is removed
+     * from the stage.
+     *
+     * @param actor
+     */
+    public void addFocusableActor(Actor actor) {
+        buttonsToAdd.add(actor);
     }
 }
