@@ -176,10 +176,10 @@ public class ControllerMenuStage extends Stage {
         else if (isGoRightKeyCode(keyCode))
             handled = moveFocusByDirection(MoveFocusDirection.east);
         else if (isDefaultActionKeyCode(keyCode)) {
-            handled = fireEventOnActor(focussedActor, InputEvent.Type.touchDown, 1, null);
+            handled = triggerActionOnActor(focussedActor);
             isPressed = handled;
         } else if (isEscapeActionKeyCode(keyCode) && escapeActor != null) {
-            handled = fireEventOnActor(escapeActor, InputEvent.Type.touchDown, 1, null);
+            handled = triggerActionOnActor(escapeActor);
             isPressed = handled;
         } else
             handled = false;
@@ -188,6 +188,16 @@ public class ControllerMenuStage extends Stage {
             handled = super.keyDown(keyCode);
 
         return handled;
+    }
+
+    /**
+     * called on focussedActor when default action key is pressed or on escapeActor when escape key is pressed
+     *
+     * @param actor focussedActor or escapeActor
+     * @return true if the event was handled
+     */
+    protected boolean triggerActionOnActor(Actor actor) {
+        return fireEventOnActor(actor, InputEvent.Type.touchDown, 1, null);
     }
 
     @Override
