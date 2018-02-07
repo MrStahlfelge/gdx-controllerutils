@@ -33,7 +33,7 @@ public class ControllerMenuDialog extends Dialog {
     public Dialog button(Button button, Object object) {
         addFocusableActor(button);
         if (getStage() != null && getStage() instanceof ControllerMenuStage)
-            ((ControllerMenuStage) getStage()).addFocussableActor(button);
+            ((ControllerMenuStage) getStage()).addFocusableActor(button);
         return super.button(button, object);
     }
 
@@ -41,14 +41,14 @@ public class ControllerMenuDialog extends Dialog {
     protected void setStage(Stage stage) {
         if (stage == null && getStage() != null && getStage() instanceof ControllerMenuStage) {
             for (int i = 0; i < buttonsToAdd.size; i++)
-                ((ControllerMenuStage) getStage()).removeFocussableActor(buttonsToAdd.get(i));
+                ((ControllerMenuStage) getStage()).removeFocusableActor(buttonsToAdd.get(i));
         }
 
         super.setStage(stage);
 
         if (stage != null && stage instanceof ControllerMenuStage) {
             for (int i = 0; i < buttonsToAdd.size; i++)
-                ((ControllerMenuStage) stage).addFocussableActor(buttonsToAdd.get(i));
+                ((ControllerMenuStage) stage).addFocusableActor(buttonsToAdd.get(i));
         }
     }
 

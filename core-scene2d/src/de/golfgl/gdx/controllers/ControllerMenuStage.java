@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class ControllerMenuStage extends Stage {
     private final Vector2 controllerTempCoords = new Vector2();
-    private Array<Actor> focussableActors = new Array<>();
+    private Array<Actor> focusableActors = new Array<>();
     private boolean isPressed;
     private boolean focusOnTouchdown = true;
     private Actor focussedActor;
@@ -34,7 +34,7 @@ public class ControllerMenuStage extends Stage {
     }
 
     /**
-     * @param focusOnTouchdown activate if a click or tap on a focussable actor should set the controller focus to this
+     * @param focusOnTouchdown activate if a click or tap on a focusable actor should set the controller focus to this
      *                         actor. Default is true
      */
     public void setFocusOnTouchdown(boolean focusOnTouchdown) {
@@ -52,21 +52,21 @@ public class ControllerMenuStage extends Stage {
         this.escapeActor = escapeActor;
     }
 
-    public void addFocussableActor(Actor actor) {
-        focussableActors.add(actor);
+    public void addFocusableActor(Actor actor) {
+        focusableActors.add(actor);
     }
 
-    public void clearFocussableActors() {
+    public void clearFocusableActors() {
         setFocussedActor(null);
-        focussableActors.clear();
+        focusableActors.clear();
     }
 
-    public void removeFocussableActor(Actor actor) {
-        focussableActors.removeValue(actor, true);
+    public void removeFocusableActor(Actor actor) {
+        focusableActors.removeValue(actor, true);
     }
 
-    public Array<Actor> getFocussableActors() {
-        return focussableActors;
+    public Array<Actor> getFocusableActors() {
+        return focusableActors;
     }
 
     /**
@@ -79,7 +79,7 @@ public class ControllerMenuStage extends Stage {
         if (focussedActor == actor)
             return true;
 
-        if (actor != null && !isActorFocussable(actor))
+        if (actor == null || !isActorFocusable(actor))
             return false;
 
         Actor oldFocussed = focussedActor;
@@ -128,13 +128,13 @@ public class ControllerMenuStage extends Stage {
     }
 
     /**
-     * checks if the given actor is focussable: in the list of focussable actors, visible, touchable, and on the stage
+     * checks if the given actor is focusable: in the list of focusable actors, visible, touchable, and on the stage
      *
      * @param actor
-     * @return true if focussable
+     * @return true if focusable
      */
-    protected boolean isActorFocussable(Actor actor) {
-        if (!focussableActors.contains(actor, true))
+    protected boolean isActorFocusable(Actor actor) {
+        if (!focusableActors.contains(actor, true))
             return false;
 
         if (!actor.isVisible())
@@ -225,9 +225,9 @@ public class ControllerMenuStage extends Stage {
             screenToStageCoordinates(controllerTempCoords.set(screenX, screenY));
             Actor target = hit(controllerTempCoords.x, controllerTempCoords.y, true);
             if (target != null) {
-                if (isActorFocussable(target))
+                if (isActorFocusable(target))
                     setFocussedActor(target);
-                else for (Actor actor : getFocussableActors()) {
+                else for (Actor actor : getFocusableActors()) {
                     if (target.isDescendantOf(actor))
                         setFocussedActor(actor);
                 }
@@ -294,7 +294,7 @@ public class ControllerMenuStage extends Stage {
     }
 
     protected boolean fireEventOnActor(Actor actor, InputEvent.Type type, int pointer, Actor related) {
-        if (actor == null || !isActorFocussable(actor) || !isActorHittable(actor))
+        if (actor == null || !isActorFocusable(actor) || !isActorHittable(actor))
             return false;
 
         InputEvent event = Pools.obtain(InputEvent.class);
@@ -321,7 +321,7 @@ public class ControllerMenuStage extends Stage {
         if (focussedActor == null)
             return false;
 
-        Actor nearestInDirection = findNearestFocussableNeighbour(direction);
+        Actor nearestInDirection = findNearestFocusableNeighbour(direction);
 
         // check for scrollable parents
         boolean hasScrolled = checkForScrollable(direction, nearestInDirection);
@@ -332,7 +332,7 @@ public class ControllerMenuStage extends Stage {
             return hasScrolled;
     }
 
-    private Actor findNearestFocussableNeighbour(MoveFocusDirection direction) {
+    private Actor findNearestFocusableNeighbour(MoveFocusDirection direction) {
         Vector2 focussedPosition = focussedActor.localToStageCoordinates(
                 new Vector2(direction == MoveFocusDirection.east ? focussedActor.getWidth() :
                         direction == MoveFocusDirection.west ? 0 : focussedActor.getWidth() / 2,
@@ -343,10 +343,10 @@ public class ControllerMenuStage extends Stage {
         Actor nearestInDirection = null;
         float distance = Float.MAX_VALUE;
 
-        for (int i = 0; i < focussableActors.size; i++) {
-            Actor currentActor = focussableActors.get(i);
+        for (int i = 0; i < focusableActors.size; i++) {
+            Actor currentActor = focusableActors.get(i);
 
-            if (currentActor != focussedActor && isActorFocussable(currentActor)
+            if (currentActor != focussedActor && isActorFocusable(currentActor)
                     && isActorInViewportArea(currentActor)) {
                 Vector2 currentActorPos = currentActor.localToStageCoordinates(
                         new Vector2(direction == MoveFocusDirection.west ? currentActor.getWidth() :
