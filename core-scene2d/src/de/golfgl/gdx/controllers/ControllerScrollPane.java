@@ -10,25 +10,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * Created by Benjamin Schulte on 05.02.2018.
  */
 
-public class ControllerScrollablePane extends ScrollPane implements IControllerScrollable {
-    public ControllerScrollablePane(Actor widget) {
+public class ControllerScrollPane extends ScrollPane implements IControllerScrollable {
+    public ControllerScrollPane(Actor widget) {
         super(widget);
     }
 
-    public ControllerScrollablePane(Actor widget, Skin skin) {
+    public ControllerScrollPane(Actor widget, Skin skin) {
         super(widget, skin);
     }
 
-    public ControllerScrollablePane(Actor widget, Skin skin, String styleName) {
+    public ControllerScrollPane(Actor widget, Skin skin, String styleName) {
         super(widget, skin, styleName);
     }
 
-    public ControllerScrollablePane(Actor widget, ScrollPaneStyle style) {
+    public ControllerScrollPane(Actor widget, ScrollPaneStyle style) {
         super(widget, style);
     }
 
     @Override
-    public boolean scroll(ControllerMenuStage.MoveFocusDirection direction) {
+    public boolean onControllerScroll(ControllerMenuStage.MoveFocusDirection direction) {
         switch (direction) {
             case south:
                 if (!isScrollY() || getScrollY() >= getMaxY())
@@ -56,7 +56,7 @@ public class ControllerScrollablePane extends ScrollPane implements IControllerS
     }
 
     /**
-     * override this to change the controller scroll speed
+     * override this to change the controller onControllerScroll speed
      *
      * @return
      */
