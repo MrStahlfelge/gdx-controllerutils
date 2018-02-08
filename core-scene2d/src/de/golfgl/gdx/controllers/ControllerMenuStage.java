@@ -176,10 +176,10 @@ public class ControllerMenuStage extends Stage {
         else if (isGoRightKeyCode(keyCode))
             handled = moveFocusByDirection(MoveFocusDirection.east);
         else if (isDefaultActionKeyCode(keyCode)) {
-            handled = triggerActionOnActor(focussedActor);
+            handled = triggerActionOnActor(true, focussedActor);
             isPressed = handled;
         } else if (isEscapeActionKeyCode(keyCode) && escapeActor != null) {
-            handled = triggerActionOnActor(escapeActor);
+            handled = triggerActionOnActor(true, escapeActor);
             isPressed = handled;
         } else
             handled = false;
@@ -196,8 +196,8 @@ public class ControllerMenuStage extends Stage {
      * @param actor focussedActor or escapeActor
      * @return true if the event was handled
      */
-    protected boolean triggerActionOnActor(Actor actor) {
-        return fireEventOnActor(actor, InputEvent.Type.touchDown, 1, null);
+    protected boolean triggerActionOnActor(boolean keyDown, Actor actor) {
+        return fireEventOnActor(actor, keyDown ? InputEvent.Type.touchDown : InputEvent.Type.touchUp, 1, null);
     }
 
     @Override
@@ -205,9 +205,9 @@ public class ControllerMenuStage extends Stage {
         boolean handled;
         if (isDefaultActionKeyCode(keyCode)) {
             isPressed = false;
-            handled = fireEventOnActor(focussedActor, InputEvent.Type.touchUp, 1, null);
+            handled = triggerActionOnActor(false, focussedActor);
         } else if (isEscapeActionKeyCode(keyCode) && escapeActor != null) {
-            handled = fireEventOnActor(escapeActor, InputEvent.Type.touchUp, 1, null);
+            handled = triggerActionOnActor(false, escapeActor);
             isPressed = handled;
         } else
             handled = false;
@@ -376,7 +376,7 @@ public class ControllerMenuStage extends Stage {
     }
 
     /**
-     * checks if a IControllerScrollable actor should scroll instead of focussing nearest neighbour
+     * checks if a IControllerScrollable actor should scroll instead of focusing nearest neighbour
      *
      * @param direction
      * @param nearestInDirection may be null
@@ -403,7 +403,7 @@ public class ControllerMenuStage extends Stage {
         }
 
         // ok - now we scroll!
-        return ((IControllerScrollable) findScrollable).scroll(direction);
+        return ((IControllerScrollable) findScrollable).onControllerScroll(direction);
     }
 
     @Override
