@@ -140,7 +140,7 @@ public class ControllerMenuStage extends Stage {
         if (!actor.isVisible())
             return false;
 
-        if (!actor.isTouchable())
+        if (!actor.isTouchable() && !(actor instanceof IControllerActable))
             return false;
 
         if (actor.getStage() != this)
