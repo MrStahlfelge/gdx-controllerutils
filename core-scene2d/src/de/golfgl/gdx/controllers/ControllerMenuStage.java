@@ -303,6 +303,8 @@ public class ControllerMenuStage extends Stage {
         event.setRelatedActor(related);
         event.setPointer(pointer);
         event.setButton(-1);
+        event.setStageX(0);
+        event.setStageY(0);
 
         actor.fire(event);
 
