@@ -43,12 +43,12 @@ public class ControllerScrollPane extends ScrollPane implements IControllerScrol
             case west:
                 if (!isScrollX() || getScrollX() <= 0)
                     return false;
-                setScrollY(getScrollX() - getMouseWheelX() * getScrollAmount());
+                setScrollX(getScrollX() - getMouseWheelX() * getScrollAmount());
                 return true;
             case east:
                 if (!isScrollX() || getScrollX() >= getMaxX())
                     return false;
-                setScrollY(getScrollX() + getMouseWheelX() * getScrollAmount());
+                setScrollX(getScrollX() + getMouseWheelX() * getScrollAmount());
                 return true;
         }
 
