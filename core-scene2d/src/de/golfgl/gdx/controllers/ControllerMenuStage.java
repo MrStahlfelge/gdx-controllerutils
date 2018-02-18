@@ -197,7 +197,12 @@ public class ControllerMenuStage extends Stage {
      * @return true if the event was handled
      */
     protected boolean triggerActionOnActor(boolean keyDown, Actor actor) {
-        return fireEventOnActor(actor, keyDown ? InputEvent.Type.touchDown : InputEvent.Type.touchUp, 1, null);
+        if (actor instanceof IControllerActable && keyDown)
+            return ((IControllerActable) actor).onControllerDefaultKeyDown();
+        else if (actor instanceof IControllerActable)
+            return ((IControllerActable) actor).onControllerDefaultKeyUp();
+        else
+            return fireEventOnActor(actor, keyDown ? InputEvent.Type.touchDown : InputEvent.Type.touchUp, 1, null);
     }
 
     @Override
