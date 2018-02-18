@@ -63,7 +63,7 @@ public class ControllerMenuDialog extends Dialog {
             previousFocussedActor = ((ControllerMenuStage) stage).getFocussedActor();
             previousEscapeActor = ((ControllerMenuStage) stage).getEscapeActor();
 
-            ((ControllerMenuStage) stage).setFocussedActor(getConfiguredDefaultActor());
+            ((ControllerMenuStage) stage).setFocusedActor(getConfiguredDefaultActor());
             ((ControllerMenuStage) stage).setEscapeActor(getConfiguredEscapeActor());
         }
 
@@ -92,7 +92,7 @@ public class ControllerMenuDialog extends Dialog {
             Actor currentFocussedActor = ((ControllerMenuStage) getStage()).getFocussedActor();
             if (previousFocussedActor != null && previousFocussedActor.getStage() == getStage()
                     && (currentFocussedActor == null || currentFocussedActor.isDescendantOf(this)))
-                ((ControllerMenuStage) getStage()).setFocussedActor(previousFocussedActor);
+                ((ControllerMenuStage) getStage()).setFocusedActor(previousFocussedActor);
             Actor currentEscapeActor = ((ControllerMenuStage) getStage()).getEscapeActor();
             if (previousEscapeActor != null && previousEscapeActor.getStage() == getStage()
                     && (currentEscapeActor == null || currentEscapeActor.isDescendantOf(this)))

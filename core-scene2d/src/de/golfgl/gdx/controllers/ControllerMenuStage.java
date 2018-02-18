@@ -57,7 +57,7 @@ public class ControllerMenuStage extends Stage {
     }
 
     public void clearFocusableActors() {
-        setFocussedActor(null);
+        setFocusedActor(null);
         focusableActors.clear();
     }
 
@@ -70,12 +70,12 @@ public class ControllerMenuStage extends Stage {
     }
 
     /**
-     * sets the currently focussed actor
+     * sets the currently focused actor
      *
      * @param actor
      * @return
      */
-    public boolean setFocussedActor(Actor actor) {
+    public boolean setFocusedActor(Actor actor) {
         if (focussedActor == actor)
             return true;
 
@@ -231,10 +231,10 @@ public class ControllerMenuStage extends Stage {
             Actor target = hit(controllerTempCoords.x, controllerTempCoords.y, true);
             if (target != null) {
                 if (isActorFocusable(target))
-                    setFocussedActor(target);
+                    setFocusedActor(target);
                 else for (Actor actor : getFocusableActors()) {
                     if (target.isDescendantOf(actor))
-                        setFocussedActor(actor);
+                        setFocusedActor(actor);
                 }
             }
         }
@@ -334,7 +334,7 @@ public class ControllerMenuStage extends Stage {
         boolean hasScrolled = checkForScrollable(direction, nearestInDirection);
 
         if (!hasScrolled && nearestInDirection != null)
-            return setFocussedActor(nearestInDirection);
+            return setFocusedActor(nearestInDirection);
         else
             return hasScrolled;
     }
@@ -416,14 +416,14 @@ public class ControllerMenuStage extends Stage {
     @Override
     public void unfocusAll() {
         super.unfocusAll();
-        setFocussedActor(null);
+        setFocusedActor(null);
     }
 
     @Override
     public void unfocus(Actor actor) {
         super.unfocus(actor);
         if (actor == focussedActor)
-            setFocussedActor(null);
+            setFocusedActor(null);
     }
 
     public enum MoveFocusDirection {west, north, east, south}
