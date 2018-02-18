@@ -391,26 +391,31 @@ public class ControllerMenuStage extends Stage {
      */
     protected boolean checkForScrollable(MoveFocusDirection direction, Actor nearestInDirection) {
         Actor findScrollable = focussedActor;
+        boolean didScroll = false;
 
-        while (findScrollable != null && !(findScrollable instanceof IControllerScrollable))
-            findScrollable = findScrollable.getParent();
-
-        if (findScrollable == null)
-            return false;
-
-        // we found a scrollable... but if the nearest actor in direction is also child of this one, it shouldn't
-        // scroll
-        if (nearestInDirection != null) {
-            Actor nearestNeighboursParent = nearestInDirection;
-            while (nearestNeighboursParent != null && nearestNeighboursParent != findScrollable)
-                nearestNeighboursParent = nearestNeighboursParent.getParent();
-
-            if (nearestNeighboursParent == findScrollable)
+        while (!didScroll) {
+            if (findScrollable == null)
                 return false;
-        }
 
-        // ok - now we scroll!
-        return ((IControllerScrollable) findScrollable).onControllerScroll(direction);
+            if (findScrollable instanceof IControllerScrollable) {
+                // we found a scrollable... but if the nearest actor in direction is also child of this one, it
+                // shouldn't scroll. In this case, we leave the while loop because every parent will also be a parent
+                // of the nearest
+                if (nearestInDirection != null) {
+                    Actor nearestNeighboursParent = nearestInDirection;
+                    while (nearestNeighboursParent != null && nearestNeighboursParent != findScrollable)
+                        nearestNeighboursParent = nearestNeighboursParent.getParent();
+
+                    if (nearestNeighboursParent == findScrollable)
+                        return false;
+                }
+
+                // ok - now we try to scroll!
+                didScroll = ((IControllerScrollable) findScrollable).onControllerScroll(direction);
+            }
+            findScrollable = findScrollable.getParent();
+        }
+        return didScroll;
     }
 
     @Override
