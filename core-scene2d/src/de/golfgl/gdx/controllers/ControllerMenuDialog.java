@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class ControllerMenuDialog extends Dialog {
     protected Array<Actor> buttonsToAdd = new Array<>();
-    protected Actor previousFocussedActor;
+    protected Actor previousFocusedActor;
     protected Actor previousEscapeActor;
 
     public ControllerMenuDialog(String title, Skin skin) {
@@ -54,13 +54,13 @@ public class ControllerMenuDialog extends Dialog {
 
     @Override
     public Dialog show(Stage stage, Action action) {
-        previousFocussedActor = null;
+        previousFocusedActor = null;
         previousEscapeActor = null;
 
         super.show(stage, action);
 
         if (stage instanceof ControllerMenuStage) {
-            previousFocussedActor = ((ControllerMenuStage) stage).getFocussedActor();
+            previousFocusedActor = ((ControllerMenuStage) stage).getFocusedActor();
             previousEscapeActor = ((ControllerMenuStage) stage).getEscapeActor();
 
             ((ControllerMenuStage) stage).setFocusedActor(getConfiguredDefaultActor());
@@ -79,7 +79,6 @@ public class ControllerMenuDialog extends Dialog {
     }
 
     /**
-     *
      * @return Actor that should take Action when the escape button is hit while the dialog is shown
      */
     protected Actor getConfiguredEscapeActor() {
@@ -89,10 +88,10 @@ public class ControllerMenuDialog extends Dialog {
     @Override
     public void hide(Action action) {
         if (getStage() != null && getStage() instanceof ControllerMenuStage) {
-            Actor currentFocussedActor = ((ControllerMenuStage) getStage()).getFocussedActor();
-            if (previousFocussedActor != null && previousFocussedActor.getStage() == getStage()
-                    && (currentFocussedActor == null || currentFocussedActor.isDescendantOf(this)))
-                ((ControllerMenuStage) getStage()).setFocusedActor(previousFocussedActor);
+            Actor currentFocusedActor = ((ControllerMenuStage) getStage()).getFocusedActor();
+            if (previousFocusedActor != null && previousFocusedActor.getStage() == getStage()
+                    && (currentFocusedActor == null || currentFocusedActor.isDescendantOf(this)))
+                ((ControllerMenuStage) getStage()).setFocusedActor(previousFocusedActor);
             Actor currentEscapeActor = ((ControllerMenuStage) getStage()).getEscapeActor();
             if (previousEscapeActor != null && previousEscapeActor.getStage() == getStage()
                     && (currentEscapeActor == null || currentEscapeActor.isDescendantOf(this)))
@@ -103,7 +102,7 @@ public class ControllerMenuDialog extends Dialog {
     }
 
     /**
-     * Call this for every actor that can be focussed by keys. The actors will be added to the Stage's focusable
+     * Call this for every actor that can be focused by keys. The actors will be added to the Stage's focusable
      * actors when the dialog is added to a Stage, and removed from Stage's focusable Actors when the dialog is removed
      * from the stage.
      *
