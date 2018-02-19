@@ -202,7 +202,7 @@ public class ControllerMenuStage extends Stage {
         else if (actor instanceof IControllerActable)
             return ((IControllerActable) actor).onControllerDefaultKeyUp();
         else
-            return fireEventOnActor(actor, keyDown ? InputEvent.Type.touchDown : InputEvent.Type.touchUp, 1, null);
+            return fireEventOnActor(actor, keyDown ? InputEvent.Type.touchDown : InputEvent.Type.touchUp, 0, null);
     }
 
     @Override
@@ -307,7 +307,7 @@ public class ControllerMenuStage extends Stage {
         event.setStage(this);
         event.setRelatedActor(related);
         event.setPointer(pointer);
-        event.setButton(-1);
+        event.setButton(pointer);
         event.setStageX(0);
         event.setStageY(0);
 
