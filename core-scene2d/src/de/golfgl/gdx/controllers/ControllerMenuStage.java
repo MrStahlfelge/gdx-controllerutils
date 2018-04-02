@@ -29,6 +29,10 @@ public class ControllerMenuStage extends Stage {
         super(viewport);
     }
 
+    public ControllerMenuStage(Viewport viewport, Batch batch) {
+        super(viewport, batch);
+    }
+
     public boolean isFocusOnTouchdown() {
         return focusOnTouchdown;
     }
