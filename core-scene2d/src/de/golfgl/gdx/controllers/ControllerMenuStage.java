@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 public class ControllerMenuStage extends Stage {
+    private static final int DIRECTION_EMPH_FACTOR = 10;
     private final Vector2 controllerTempCoords = new Vector2();
     private Array<Actor> focusableActors = new Array<>();
     private boolean isPressed;
@@ -374,7 +375,7 @@ public class ControllerMenuStage extends Stage {
                         || (direction == MoveFocusDirection.east && currentActorPos.x >= focusedPosition.x);
 
                 if (isInDirection && isActorHittable(currentActor)) {
-                    float currentDist = currentActorPos.dst2(focusedPosition);
+                    float currentDist = calcNeighbourDistance(direction, focusedPosition, currentActorPos);
 
                     if (currentDist < distance) {
                         nearestInDirection = currentActor;
@@ -385,6 +386,27 @@ public class ControllerMenuStage extends Stage {
             }
         }
         return nearestInDirection;
+    }
+
+    /**
+     *
+     * @param direction
+     * @param focusedPosition
+     * @param currentActorPos
+     * @return
+     */
+    protected float calcNeighbourDistance(MoveFocusDirection direction, Vector2 focusedPosition, Vector2
+            currentActorPos) {
+        float horizontalDist = currentActorPos.x - focusedPosition.x;
+        float verticalDist = currentActorPos.y - focusedPosition.y;
+
+        // emphasize the direct direction
+        if (direction == MoveFocusDirection.south || direction == MoveFocusDirection.north)
+            horizontalDist = horizontalDist * DIRECTION_EMPH_FACTOR;
+        else
+            verticalDist = verticalDist * DIRECTION_EMPH_FACTOR;
+
+        return horizontalDist * horizontalDist + verticalDist * verticalDist;
     }
 
     /**
