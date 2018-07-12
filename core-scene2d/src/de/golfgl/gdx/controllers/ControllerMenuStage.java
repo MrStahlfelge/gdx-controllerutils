@@ -19,13 +19,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 public class ControllerMenuStage extends Stage {
-    private static final int DIRECTION_EMPH_FACTOR = 10;
+    private static final float INITIAL_DIRECTION_EMPH_FACTOR = 3.1f;
     private final Vector2 controllerTempCoords = new Vector2();
     private Array<Actor> focusableActors = new Array<>();
     private boolean isPressed;
     private boolean focusOnTouchdown = true;
     private Actor focusedActor;
     private Actor escapeActor;
+    private float directionEmphFactor = INITIAL_DIRECTION_EMPH_FACTOR;
 
     public ControllerMenuStage(Viewport viewport) {
         super(viewport);
@@ -402,11 +403,23 @@ public class ControllerMenuStage extends Stage {
 
         // emphasize the direct direction
         if (direction == MoveFocusDirection.south || direction == MoveFocusDirection.north)
-            horizontalDist = horizontalDist * DIRECTION_EMPH_FACTOR;
+            horizontalDist = horizontalDist * directionEmphFactor;
         else
-            verticalDist = verticalDist * DIRECTION_EMPH_FACTOR;
+            verticalDist = verticalDist * directionEmphFactor;
 
         return horizontalDist * horizontalDist + verticalDist * verticalDist;
+    }
+
+    public float getDirectionEmphFactor() {
+        return directionEmphFactor;
+    }
+
+    /**
+     * use this to emphasize a direction when navigating by arrows
+     * @param directionEmphFactor - the more you give here, the more actors in direct direction are favored
+     */
+    public void setDirectionEmphFactor(float directionEmphFactor) {
+        this.directionEmphFactor = directionEmphFactor;
     }
 
     /**
