@@ -63,13 +63,33 @@ public class ControllerMenuStage extends Stage {
         focusableActors.add(actor);
     }
 
+    public void addFocusableActors(Array<Actor> actors) {
+        for (int i = 0; i < actors.size; i++)
+            addFocusableActor(actors.get(i));
+    }
+
     public void clearFocusableActors() {
         setFocusedActor(null);
         focusableActors.clear();
     }
 
+    /**
+     * garbage collects all actors from focusable list that are not present on the stage
+     */
+    public void removeFocusableActorsNotOnStage() {
+        for (int i = focusableActors.size - 1; i >= 0; i--) {
+            if (focusableActors.get(i).getStage() != this)
+                focusableActors.removeIndex(i);
+        }
+    }
+
     public void removeFocusableActor(Actor actor) {
         focusableActors.removeValue(actor, true);
+    }
+
+    public void removeFocusableActors(Array<Actor> actors) {
+        for (int i = 0; i < actors.size; i++)
+            removeFocusableActor(actors.get(i));
     }
 
     public Array<Actor> getFocusableActors() {

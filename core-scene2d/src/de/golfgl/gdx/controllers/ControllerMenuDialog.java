@@ -40,15 +40,13 @@ public class ControllerMenuDialog extends Dialog {
     @Override
     protected void setStage(Stage stage) {
         if (stage == null && getStage() != null && getStage() instanceof ControllerMenuStage) {
-            for (int i = 0; i < buttonsToAdd.size; i++)
-                ((ControllerMenuStage) getStage()).removeFocusableActor(buttonsToAdd.get(i));
+            ((ControllerMenuStage) getStage()).removeFocusableActors(buttonsToAdd);
         }
 
         super.setStage(stage);
 
         if (stage != null && stage instanceof ControllerMenuStage) {
-            for (int i = 0; i < buttonsToAdd.size; i++)
-                ((ControllerMenuStage) stage).addFocusableActor(buttonsToAdd.get(i));
+            ((ControllerMenuStage) stage).addFocusableActors(buttonsToAdd);
         }
     }
 
