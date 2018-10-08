@@ -8,6 +8,7 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "http://maven.imagej.net/content/repositories/public/" }
         jcenter()
         maven { url uri(System.getenv("INTEL_MULTI_OS_ENGINE_HOME") + "/gradle") }
     }
@@ -138,5 +139,6 @@ project(":desktop-jamepad") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        compile "com.github.WilliamAHartman:Jamepad:1.2"
     }
 }

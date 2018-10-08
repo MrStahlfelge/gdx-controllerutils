@@ -1,8 +1,6 @@
 targetCompatibility = 1.7
 sourceCompatibility = 1.7
 
-sourceSets.main.java.srcDirs = [ "src/" ]
-
 ext {
 	ARTIFACTID = 'gdx-controllers-jamepad'
 }
