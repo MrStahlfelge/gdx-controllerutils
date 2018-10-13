@@ -27,7 +27,7 @@ import static com.badlogic.gdx.graphics.Color.WHITE;
 public class JamepadTest extends ApplicationAdapter {
     private Stage stage;
     private Array<String> controllerNames = new Array();
-    private Array<Controller> controllers = new Array();
+    private final Array<Controller> controllers = new Array();
     private ObjectMap<ControllerButton, Label> buttonToLabel = new ObjectMap<>(ControllerButton.values().length);
     private ObjectMap<ControllerAxis, Label> axisToLabel = new ObjectMap<>(ControllerAxis.values().length);
     private Controller selectedController;
@@ -54,24 +54,28 @@ public class JamepadTest extends ApplicationAdapter {
         Controllers.addListener(new ControllerAdapter() {
             @Override
             public void connected(Controller controller) {
-                controllers.add(controller);
-                controllerNames.add(controller.getName());
+                synchronized (controllers) {
+                    controllers.add(controller);
+                    controllerNames.add(controller.getName());
 
-                int selected = controllerList.getSelectedIndex();
-                controllerList.setItems(controllerNames);
-                controllerList.setSelectedIndex(selected);
+                    int selected = controllerList.getSelectedIndex();
+                    controllerList.setItems(controllerNames);
+                    controllerList.setSelectedIndex(selected);
+                }
             }
 
             @Override
             public void disconnected(Controller controller) {
-                int index = controllers.indexOf(controller, true);
-                controllerNames.removeIndex(index + 1);
-                controllers.removeValue(controller, true);
+                synchronized (controllers) {
+                    int index = controllers.indexOf(controller, true);
+                    controllerNames.removeIndex(index + 1);
+                    controllers.removeValue(controller, true);
 
-                if (controller.equals(selectedController)) {
-                    selectedController = null;
-                    controllerList.setItems(controllerNames);
-                    controllerList.setSelectedIndex(0);
+                    if (controller.equals(selectedController)) {
+                        selectedController = null;
+                        controllerList.setItems(controllerNames);
+                        controllerList.setSelectedIndex(0);
+                    }
                 }
             }
         });
