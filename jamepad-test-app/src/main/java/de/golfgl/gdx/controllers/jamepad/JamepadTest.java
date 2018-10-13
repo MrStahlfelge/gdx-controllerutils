@@ -70,10 +70,10 @@ public class JamepadTest extends ApplicationAdapter {
                     int index = controllers.indexOf(controller, true);
                     controllerNames.removeIndex(index + 1);
                     controllers.removeValue(controller, true);
+                    controllerList.setItems(controllerNames);
 
                     if (controller.equals(selectedController)) {
                         selectedController = null;
-                        controllerList.setItems(controllerNames);
                         controllerList.setSelectedIndex(0);
                     }
                 }
