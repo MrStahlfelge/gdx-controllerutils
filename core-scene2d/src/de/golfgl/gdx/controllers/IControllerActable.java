@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 /**
- * This class can be used for Actors where the controller default button should trigger an other action than firing
+ * This interface can be used for Actors where the controller default button should trigger an other action than firing
  * a touch down or touch up event. See {@link ControllerMenuStage#fireEventOnActor(Actor, InputEvent.Type, int, Actor)}
  * and {@link ControllerSlider} for an example
  * <p>

@@ -9,6 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 /**
+ * ControllerMenuDialog extends libGDX' {@link Dialog}. Use {@link #addFocusableActor(Actor)} to safely add
+ * Actors to the Stage's focusable actors list. If you use {@link #button(Button, Object)}, it will be called
+ * automatically.
+ * <p>
  * Created by Benjamin Schulte on 04.11.2017.
  */
 

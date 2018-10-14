@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 
 /**
+ * {@link Slider} with controller and keyboard support.
+ *
  * Created by Benjamin Schulte on 08.02.2018.
  */
 

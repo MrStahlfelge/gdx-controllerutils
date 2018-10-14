@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
- * Normal {@link ScrollPane} implementing {@link IControllerScrollable}
+ * Normal {@link ScrollPane} implementing {@link IControllerScrollable} for controller and keyboard scroll behaviour
  * <p>
  * Created by Benjamin Schulte on 05.02.2018.
  */

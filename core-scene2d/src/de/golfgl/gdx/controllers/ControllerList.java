@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
+ * ControllerList is extending {@link List} with scroll behaviour for controllers and key events.
+ *
  * Created by Benjamin Schulte on 11.03.2018.
  */
 
