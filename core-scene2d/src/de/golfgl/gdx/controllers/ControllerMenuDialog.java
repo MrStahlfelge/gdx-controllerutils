@@ -108,5 +108,8 @@ public class ControllerMenuDialog extends Dialog {
      */
     public void addFocusableActor(Actor actor) {
         buttonsToAdd.add(actor);
+
+        if (getStage() != null && getStage() instanceof ControllerMenuStage)
+            ((ControllerMenuStage) getStage()).addFocusableActor(actor);
     }
 }
