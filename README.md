@@ -18,7 +18,7 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d)
 
 ### desktop-jamepad
-[Jamepad](https://github.com/williamahartman/Jamepad) implementation agains libGDX' controller interface. Brings hotplugging on Lwjgl2!
+[Jamepad](https://github.com/williamahartman/Jamepad) implementation for libGDX' controller interfaces. Bring hotplugging to Lwjgl2 by just changing your gradle file!
 
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Jamepad-controller-implementation)
 
