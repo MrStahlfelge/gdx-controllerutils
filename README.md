@@ -24,7 +24,7 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 
 ## Demo
 
-See core-mapping and core-scene2d in action in my game Secret Chronicles: [Web](https://www.kongregate.com/games/MrStahlfelge/secret-chronicles-classic-platformer) [Android](https://www.amazon.com/gp/mas/dl/android?p=de.golfgl.smc.android)
+See core-mapping and core-scene2d in action in my game [Falling Lightblocks Web/Android/FireTV](https://www.golfgl.de/lightblocks/)
 
 ## Installation
 
@@ -33,7 +33,7 @@ This project is published to the Sonatype Maven repository. You can integrate th
 Define the version of this API right after the gdxVersion:
 
     gdxVersion = '1.9.6' //or another gdx version you use
-    cuversion = '0.1.1'
+    cuversion = '0.1.2'
 
 Then add the needed dependencies to your project. You will find the artifact ids on the subproject's wiki sites.
 
