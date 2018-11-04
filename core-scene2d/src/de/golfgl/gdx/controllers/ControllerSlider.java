@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 
 /**
  * {@link Slider} with controller and keyboard support.
- *
+ * <p>
  * Created by Benjamin Schulte on 08.02.2018.
  */
 
@@ -42,19 +42,19 @@ public class ControllerSlider extends Slider implements IControllerActable, ICon
             case north:
                 if (!isVertical)
                     return false;
-                return setValue(getValue() - getStepSize());
+                return setValue(getValue() - getControllerScrollStepSize());
             case south:
                 if (!isVertical)
                     return false;
-                return setValue(getValue() + getStepSize());
+                return setValue(getValue() + getControllerScrollStepSize());
             case east:
                 if (isVertical)
                     return false;
-                return setValue(getValue() + getStepSize());
+                return setValue(getValue() + getControllerScrollStepSize());
             case west:
                 if (isVertical)
                     return false;
-                return setValue(getValue() - getStepSize());
+                return setValue(getValue() - getControllerScrollStepSize());
         }
 
         return false;
@@ -64,6 +64,10 @@ public class ControllerSlider extends Slider implements IControllerActable, ICon
     public boolean onControllerDefaultKeyUp() {
         // nothing should happen - just swallow the event
         return true;
+    }
+
+    protected float getControllerScrollStepSize() {
+        return getStepSize();
     }
 
 }
