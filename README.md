@@ -2,6 +2,9 @@
 
 Utilitys for using controllers with libGDX
 
+[![Build Status](https://travis-ci.org/MrStahlfelge/gdx-controllerutils.svg?branch=master)](https://travis-ci.org/MrStahlfelge/gdx-controllerutils)
+![Maven Central](http://maven-badges.herokuapp.com/maven-central/de.golfgl.gdxcontrollerutils/gdx-controllerutils-mapping/badge.svg)
+
 ## Subprojects
 
 All subprojects are technically independant, you can use only one of them in your project. They are bundled in a single Github project because all have something to do with Game Controller Input and libGDX.
