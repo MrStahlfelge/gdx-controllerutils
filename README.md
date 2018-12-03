@@ -27,6 +27,8 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 
 ## Demo
 
+core-scene2d is shown with sources in [raeleus' Shadow Walker UI demo](https://github.com/raeleus/Shadow-Walker-UI).
+
 See core-mapping and core-scene2d in action in my game [Falling Lightblocks Web/Android/FireTV](https://www.golfgl.de/lightblocks/)
 
 ## Installation

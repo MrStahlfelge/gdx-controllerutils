@@ -11,7 +11,13 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * A stage with support for button or key control
+ * A stage with support for button or key control as a drop-in replacement for {@link Stage}.
+ * <p>
+ * Every Actor that should be operable by buttons must be posted to the Stage by calling {@link #addFocusableActor}.
+ * <p>
+ * The initially focused Actor must be set by calling {@link #setFocusedActor(Actor)}.
+ * <p>
+ * That's all.
  * <p>
  * See https://github.com/MrStahlfelge/gdx-controllerutils for more information
  * <p>
@@ -24,6 +30,7 @@ public class ControllerMenuStage extends Stage {
     private Array<Actor> focusableActors = new Array<>();
     private boolean isPressed;
     private boolean focusOnTouchdown = true;
+    private boolean sendMouseOverEvents = true;
     private Actor focusedActor;
     private Actor escapeActor;
     private float directionEmphFactor = INITIAL_DIRECTION_EMPH_FACTOR;
@@ -44,8 +51,24 @@ public class ControllerMenuStage extends Stage {
      * @param focusOnTouchdown activate if a click or tap on a focusable actor should set the controller focus to this
      *                         actor. Default is true
      */
-    public void setFocusOnTouchdown(boolean focusOnTouchdown) {
+    public ControllerMenuStage setFocusOnTouchdown(boolean focusOnTouchdown) {
         this.focusOnTouchdown = focusOnTouchdown;
+        return this;
+    }
+
+    public boolean isSendMouseOverEvents() {
+        return sendMouseOverEvents;
+    }
+
+    /**
+     * @param sendMouseOverEvents activate if the Actor gaining or losing focus should receive events as if the mouse
+     *                            is over the Actor. Default is true. This will highlight a focused Button with the
+     *                            Skin's over-drawable. For libGDX 1.9.9, you should disable this in order to use the
+     *                            new focused drawables in Actor styles.
+     */
+    public ControllerMenuStage setSendMouseOverEvents(boolean sendMouseOverEvents) {
+        this.sendMouseOverEvents = sendMouseOverEvents;
+        return this;
     }
 
     public Actor getEscapeActor() {
@@ -135,7 +158,8 @@ public class ControllerMenuStage extends Stage {
      * @param focusedActor the actor that gained focus
      */
     protected void onFocusGained(Actor focusedActor, Actor oldFocused) {
-        fireEventOnActor(focusedActor, InputEvent.Type.enter, -1, oldFocused);
+        if (sendMouseOverEvents)
+            fireEventOnActor(focusedActor, InputEvent.Type.enter, -1, oldFocused);
         setKeyboardFocus(focusedActor);
         setScrollFocus(focusedActor);
     }
@@ -151,7 +175,8 @@ public class ControllerMenuStage extends Stage {
             isPressed = false;
         }
 
-        fireEventOnActor(focusedActor, InputEvent.Type.exit, -1, newFocused);
+        if (sendMouseOverEvents)
+            fireEventOnActor(focusedActor, InputEvent.Type.exit, -1, newFocused);
     }
 
     /**
@@ -177,7 +202,6 @@ public class ControllerMenuStage extends Stage {
     }
 
     protected boolean isActorHittable(Actor actor) {
-        // Prüfung auf hit
         Vector2 center = actor.localToStageCoordinates(new Vector2(actor.getWidth() / 2, actor.getHeight() / 2));
         Actor hitActor = hit(center.x, center.y, true);
         return hitActor != null && (hitActor.isDescendantOf(actor));
@@ -252,7 +276,6 @@ public class ControllerMenuStage extends Stage {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // wenn der Actor den fokus kriegen kann, dann kriegt er ihn hiermit auch
         if (isFocusOnTouchdown()) {
             screenToStageCoordinates(controllerTempCoords.set(screenX, screenY));
             Actor target = hit(controllerTempCoords.x, controllerTempCoords.y, true);
@@ -410,7 +433,6 @@ public class ControllerMenuStage extends Stage {
     }
 
     /**
-     *
      * @param direction
      * @param focusedPosition
      * @param currentActorPos
@@ -436,6 +458,7 @@ public class ControllerMenuStage extends Stage {
 
     /**
      * use this to emphasize a direction when navigating by arrows
+     *
      * @param directionEmphFactor - the more you give here, the more actors in direct direction are favored
      */
     public void setDirectionEmphFactor(float directionEmphFactor) {
