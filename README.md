@@ -49,10 +49,9 @@ To build from source, clone or download this repository, then open it in Android
     
 See `build.gradle` file for current version to use in your dependencies.
 
-## Updates & News
-Follow me to receive release updates about this
+## News & Community
 
-https://twitter.com/MrStahlfelge
+You can get help on the [libgdx discord](https://discord.gg/6pgDK9F).
 
 # License
 
