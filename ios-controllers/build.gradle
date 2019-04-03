@@ -1,0 +1,6 @@
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+
+ext {
+	ARTIFACTID = 'gdx-controllers-iosrvm'
+}
