@@ -9,13 +9,11 @@ buildscript {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
-        maven { url uri(System.getenv("INTEL_MULTI_OS_ENGINE_HOME") + "/gradle") }
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.0'
-        classpath 'org.multi-os-engine:moe-gradle:1.2.3'
     }
 }
 
@@ -140,6 +138,33 @@ project(":desktop-jamepad") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.github.WilliamAHartman:Jamepad:1.2"
+    }
+}
+
+project(":ios-controllers") {
+    apply plugin: 'java'
+    apply plugin: 'robovm'
+
+    apply from: '../publish.gradle'
+
+    configurations {
+        custom
+        compile.extendsFrom custom
+    }
+
+    eclipse {
+        project {
+            name = appName + "-ios-controllers"
+        }
+    }
+
+    dependencies {
+
+        compile "com.mobidevelop.robovm:robovm-rt:${roboVMVersion}"
+        compile "com.mobidevelop.robovm:robovm-cocoatouch:${roboVMVersion}"
+        compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+
     }
 }
 

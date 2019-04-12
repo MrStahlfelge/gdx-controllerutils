@@ -25,6 +25,11 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Jamepad-controller-implementation)
 
+### ios-controllers
+iOS MFI controller implementation for libGDX' controller interfaces.
+
+[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/iOS-MFI-controller-implementation)
+
 ## Demos and examples
 
 core-scene2d is shown with sources in [raeleus' Shadow Walker UI demo](https://github.com/raeleus/Shadow-Walker-UI).
@@ -53,6 +58,6 @@ See `build.gradle` file for current version to use in your dependencies.
 
 You can get help on the [libgdx discord](https://discord.gg/6pgDK9F).
 
-# License
+## License
 
 The project is licensed under the Apache 2 License, meaning you can use it free of charge, without strings attached in commercial and non-commercial projects. We love to get (non-mandatory) credit in case you release a game or app using this project!
