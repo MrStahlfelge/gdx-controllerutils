@@ -1,6 +1,6 @@
 # gdx-controllerutils
 
-Utilitys for using controllers with libGDX
+Utilitys for using controllers with libGDX, and enhanced drop-in replacements for the official gdx-controllers extension
 
 [![Build Status](https://travis-ci.org/MrStahlfelge/gdx-controllerutils.svg?branch=master)](https://travis-ci.org/MrStahlfelge/gdx-controllerutils)
 ![Maven Central](http://maven-badges.herokuapp.com/maven-central/de.golfgl.gdxcontrollerutils/gdx-controllerutils-mapping/badge.svg)
@@ -29,6 +29,11 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 iOS MFI controller implementation for libGDX' controller interfaces.
 
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/iOS-MFI-controller-implementation)
+
+### gwt-controllers
+The official GWT implementation, but with enhancements, regular releases and compatibility for older libGDX versions.
+
+[More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/GWT-controller-implementation)
 
 ## Demos and examples
 

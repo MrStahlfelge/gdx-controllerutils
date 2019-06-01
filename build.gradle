@@ -141,6 +141,32 @@ project(":desktop-jamepad") {
     }
 }
 
+project(":gwt-controllers") {
+    apply plugin: 'java'
+
+
+    apply from: '../publish.gradle'
+
+    configurations {
+        custom
+        compile.extendsFrom custom
+    }
+
+    eclipse {
+        project {
+            name = appName + "-gwt-controllers"
+        }
+    }
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion:sources"
+    }
+}
+
 project(":ios-controllers") {
     apply plugin: 'java'
     apply plugin: 'robovm'
