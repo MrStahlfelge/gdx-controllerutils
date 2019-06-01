@@ -20,6 +20,11 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d)
 
+### core-advcontrollers
+Advanced core interfaces giving you more control over connected controllers: Rumble, query available buttons and axis, query standard button constants, and more.
+
+(wip)
+
 ### desktop-jamepad
 [Jamepad](https://github.com/williamahartman/Jamepad) implementation for libGDX' controller interfaces. Bring hotplugging to Lwjgl2 by just changing your gradle file!
 
@@ -31,7 +36,7 @@ iOS MFI controller implementation for libGDX' controller interfaces.
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/iOS-MFI-controller-implementation)
 
 ### gwt-controllers
-The official GWT implementation, but with enhancements, regular releases and compatibility for older libGDX versions.
+The official GWT implementation, but with enhancements, regular releases and bugfixes down to libGDX 1.9.5+.
 
 [More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/GWT-controller-implementation)
 

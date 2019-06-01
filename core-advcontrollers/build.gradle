@@ -1,0 +1,11 @@
+apply plugin : 'java'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+
+ext {
+	ARTIFACTID = 'gdx-controllers-advanced'
+}
+

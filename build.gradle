@@ -84,9 +84,6 @@ project(":core-scene2d") {
     }
 }
 
-
-
-
 project(":core-mapping") {
     apply plugin: 'java'
 
@@ -115,8 +112,26 @@ project(":core-mapping") {
     }
 }
 
+project(":core-advcontrollers") {
+    apply plugin: 'java'
 
+    apply from: '../publish.gradle'
 
+    configurations {
+        custom
+        compile.extendsFrom custom
+    }
+
+    eclipse {
+        project {
+            name = appName + "-core-advcontrollers"
+        }
+    }
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+    }
+}
 
 project(":desktop-jamepad") {
     apply plugin: 'java'
@@ -135,6 +150,7 @@ project(":desktop-jamepad") {
     }
 
     dependencies {
+        compile project(":core-advcontrollers")
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.github.WilliamAHartman:Jamepad:1.2"
