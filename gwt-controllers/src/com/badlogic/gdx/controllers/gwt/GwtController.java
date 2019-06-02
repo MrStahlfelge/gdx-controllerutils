@@ -16,7 +16,7 @@
 
 package com.badlogic.gdx.controllers.gwt;
 
-import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.AdvancedController;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.controllers.gwt.support.Gamepad;
@@ -24,28 +24,25 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntFloatMap;
 
-public class GwtController implements Controller {
+public class GwtController implements AdvancedController {
 
 	private int index;
-	
 	private String name;
-
 	private boolean standardMapping;
-
 	protected final float[] axes;
-	
 	protected final IntFloatMap buttons = new IntFloatMap();
-
 	protected int pov = 0;
 
 	private final Array<ControllerListener> listeners = new Array<ControllerListener>();
-	
+	private final int buttonCount;
+
 	public GwtController(int index, String name) {
 		this.index = index;
 		this.name = name;
 		
 		Gamepad gamepad = Gamepad.getGamepad(index);
 		axes = new float[gamepad.getAxes().length()];
+		buttonCount = gamepad.getButtons().length();
 		standardMapping = gamepad.getMapping().equals("standard");
 	}
 	
@@ -65,7 +62,7 @@ public class GwtController implements Controller {
 		return buttons.get(buttonCode, 0) >= 0.5f;
 	}
 
-	public float getButtonAmount(int buttonCode) {
+	public float getButtonValue(int buttonCode) {
 		return buttons.get(buttonCode, 0);
 	}
 	
@@ -118,6 +115,69 @@ public class GwtController implements Controller {
 	@Override
 	public void setAccelerometerSensitivity(float sensitivity) {
 		// Nope
+	}
+
+	@Override
+	public boolean canVibrate() {
+		return false;
+	}
+
+	@Override
+	public boolean isVibrating() {
+		return false;
+	}
+
+	@Override
+	public void startVibration(float strength) {
+		// not supported
+	}
+
+	@Override
+	public void stopVibration() {
+		// not supported
+	}
+
+	@Override
+	public String getUniqueId() {
+		// UUID is not available on GWT, but according to W3C, indices are not reassigned. So
+		// it is somehow safe to use the index.
+		return String.valueOf(index);
+	}
+
+	@Override
+	public boolean supportsPlayerIndex() {
+		return false;
+	}
+
+	@Override
+	public int getPlayerIndex() {
+		// not supported
+		return PLAYER_IDX_UNSET;
+	}
+
+	@Override
+	public void setPlayerIndex(int index) {
+		// not supported
+	}
+
+	@Override
+	public int getMinButtonIndex() {
+		return 0;
+	}
+
+	@Override
+	public int getMaxButtonIndex() {
+		return buttonCount - 1;
+	}
+
+	@Override
+	public int getAxisCount() {
+		return axes.length;
+	}
+
+	@Override
+	public int getPovCount() {
+		return isStandardMapping() ? 1 : 0;
 	}
 
 	@Override

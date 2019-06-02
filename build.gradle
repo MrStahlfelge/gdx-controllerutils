@@ -176,6 +176,7 @@ project(":gwt-controllers") {
     }
 
     dependencies {
+        compile project(":core-advcontrollers")
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
