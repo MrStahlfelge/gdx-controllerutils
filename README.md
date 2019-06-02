@@ -23,7 +23,7 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 ### core-advcontrollers
 Advanced core interfaces giving you more control over connected controllers: Rumble, query available buttons and axis, query standard button constants, and more.
 
-(wip)
+[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Advanced-Controller-interface)
 
 ### desktop-jamepad
 [Jamepad](https://github.com/williamahartman/Jamepad) implementation for libGDX' controller interfaces. Bring hotplugging to Lwjgl2 by just changing your gradle file!
