@@ -1,5 +1,6 @@
 package de.golfgl.gdx.controllers.mapping;
 
+import com.badlogic.gdx.controllers.AdvancedController;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.utils.JsonValue;
 
@@ -34,7 +35,9 @@ public class ControllerMappings {
         float highestValue = 0;
         int axisWithHighestValue = -1;
 
-        for (int i = 0; i <= 500; i++) {
+        final int maxAxisIndex = controller instanceof AdvancedController ?
+                ((AdvancedController) controller).getAxisCount() - 1 : 500;
+        for (int i = 0; i <= maxAxisIndex; i++) {
             float abs = Math.abs(controller.getAxis(i));
             if (abs > highestValue && abs >= analogToDigitalTreshold && abs <= maxAcceptedAnalogValue) {
                 highestValue = abs;
@@ -49,7 +52,12 @@ public class ControllerMappings {
         // Cycle through button indexes to check if a button is pressed
         // Some gamepads report buttons from 90 to 107, so we check up to index 500
         // this should be moved into controller implementation which knows it better
-        for (int i = 0; i <= 500; i++)
+
+        final int minButtonIndex = controller instanceof AdvancedController ?
+                ((AdvancedController) controller).getMinButtonIndex() : 0;
+        final int maxButtonIndex = controller instanceof AdvancedController ?
+                ((AdvancedController) controller).getMaxButtonIndex() : 500;
+        for (int i = minButtonIndex; i <= maxButtonIndex; i++)
             if (controller.getButton(i))
                 return i;
 

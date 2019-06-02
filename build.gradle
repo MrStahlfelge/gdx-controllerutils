@@ -101,6 +101,7 @@ project(":core-mapping") {
     }
 
     dependencies {
+        compile project(":core-advcontrollers")
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
 
         testCompile "junit:junit:4.12"
