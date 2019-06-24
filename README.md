@@ -31,9 +31,9 @@ Advanced core interfaces giving you more control over connected controllers: Rum
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Jamepad-controller-implementation)
 
 ### ios-controllers
-iOS MFI controller implementation for libGDX' controller interfaces.
+iOS controller implementation (MFI and iCade) for libGDX' controller interfaces.
 
-[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/iOS-MFI-controller-implementation)
+[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/iOS-controller-implementation)
 
 ### gwt-controllers
 The official GWT implementation, but with enhancements, regular releases and bugfixes down to libGDX 1.9.5+.
