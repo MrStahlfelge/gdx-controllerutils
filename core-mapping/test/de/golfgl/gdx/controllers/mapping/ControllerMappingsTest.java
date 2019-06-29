@@ -356,7 +356,7 @@ public class ControllerMappingsTest {
     public void testDefaultMapping() {
         ControllerMappings mappings = new ControllerMappings() {
             @Override
-            public boolean getDefaultMapping(MappedInputs defaultMapping) {
+            public boolean getDefaultMapping(MappedInputs defaultMapping, Controller controller) {
                 defaultMapping.putMapping(new MappedInput(0, new ControllerAxis(5)));
                 defaultMapping.putMapping(new MappedInput(1, new ControllerButton(2)));
                 return true;

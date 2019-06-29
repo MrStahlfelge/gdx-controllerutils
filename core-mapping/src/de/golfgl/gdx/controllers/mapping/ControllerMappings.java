@@ -135,7 +135,7 @@ public class ControllerMappings {
         // in case the controller is not recorded or loaded already, initialize it
         if (retVal == null) {
             MappedInputs defaultMapping = new MappedInputs(controller);
-            if (getDefaultMapping(defaultMapping)) {
+            if (getDefaultMapping(defaultMapping, controller)) {
                 retVal = defaultMapping;
                 mappedInputs.put(retVal.controllerName, retVal);
             }
@@ -145,15 +145,15 @@ public class ControllerMappings {
     }
 
     /**
-     * use this method to define a default mapping for your controllers. You can check for the controller's name
-     * by calling {@link MappedInputs#getControllerName()}
+     * use this method to define a default mapping for your controllers.
      * <p>
-     * The method is only called if mapping for the controller is needed, but not found
+     * The method is only called if mapping for the controller is needed, but not found. Use the
+     * given controller object to find out more about the controller.
      *
      * @param defaultMapping Use {@link MappedInputs#putMapping(MappedInput)} on this to define default mappings
      * @return true if default mappings were defined and should be used
      */
-    public boolean getDefaultMapping(MappedInputs defaultMapping) {
+    public boolean getDefaultMapping(MappedInputs defaultMapping, Controller controller) {
         //nothing - just override it for your desires
         return false;
     }
