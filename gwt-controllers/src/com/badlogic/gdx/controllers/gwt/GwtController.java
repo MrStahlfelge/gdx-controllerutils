@@ -32,6 +32,7 @@ public class GwtController implements AdvancedController {
 	protected final float[] axes;
 	protected final IntFloatMap buttons = new IntFloatMap();
 	protected int pov = 0;
+	boolean connected = true;
 
 	private final Array<ControllerListener> listeners = new Array<ControllerListener>();
 	private final int buttonCount;
@@ -178,6 +179,11 @@ public class GwtController implements AdvancedController {
 	@Override
 	public int getPovCount() {
 		return isStandardMapping() ? 1 : 0;
+	}
+
+	@Override
+	public boolean isConnected() {
+		return connected;
 	}
 
 	@Override

@@ -159,6 +159,7 @@ public class GwtControllers implements ControllerManager, GamepadSupportListener
 		GwtController controller = controllerMap.remove(index);
 		if (controller != null) {
 			synchronized (eventQueue) {
+			    controller.connected = false;
 				GwtControllerEvent event = eventPool.obtain();
 				event.type = GwtControllerEvent.DISCONNECTED;
 				event.controller = controller;
