@@ -1,4 +1,4 @@
-include ':android', ':core-mapping'
+include ':android-controllers', ':core-mapping'
 include ':core-scene2d'
 include ':core-advcontrollers'
 include ':desktop-jamepad'

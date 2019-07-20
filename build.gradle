@@ -44,7 +44,7 @@ allprojects {
     version = VERSION
 }
 
-project(":android") {
+project(":android-controllers") {
     configurations {
         custom
         compile.extendsFrom custom
@@ -58,7 +58,7 @@ project(":android") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-
+        compile project(":core-advcontrollers")
     }
 }
 

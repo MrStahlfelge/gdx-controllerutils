@@ -30,7 +30,7 @@ android {
 }
 
 ext {
-	ARTIFACTID = 'gdx-controllerutils-android'
+	ARTIFACTID = 'gdx-controllers-android'
 }
 
 apply from : '../androidpublish.gradle'
