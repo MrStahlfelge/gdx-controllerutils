@@ -40,7 +40,7 @@ The official GWT implementation, but with enhancements, regular releases and bug
 
 [More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/GWT-controller-implementation)
 
-### gwt-controllers
+### android-controllers
 The official Android implementation, but with enhancements, regular releases and bugfixes down to libGDX 1.9.5+.
 
 [More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Android-controller-implementation)
