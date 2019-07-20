@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2011 See AUTHORS file.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package android;
+package com.badlogic.gdx.controllers.android;
 
 import android.view.InputDevice;
 import android.view.InputDevice.MotionRange;
@@ -37,11 +37,11 @@ public class AndroidController implements Controller {
 	protected int pov = 0;
 	private boolean povAxis;
 	private final Array<ControllerListener> listeners = new Array<ControllerListener>();
-	
+
 	public AndroidController(int deviceId, String name) {
 		this.deviceId = deviceId;
 		this.name = name;
-		
+
 		InputDevice device = InputDevice.getDevice(deviceId);
 		int numAxes = 0;
 		for (MotionRange range : device.getMotionRanges()) {
@@ -81,7 +81,7 @@ public class AndroidController implements Controller {
 	public int getDeviceId () {
 		return deviceId;
 	}
-	
+
 	@Override
 	public boolean getSliderX (int sliderIndex) {
 		return false;
@@ -110,7 +110,7 @@ public class AndroidController implements Controller {
 	public void removeListener (ControllerListener listener) {
 		this.listeners.removeValue(listener, true);
 	}
-	
+
 	public Array<ControllerListener> getListeners() {
 		return this.listeners;
 	}

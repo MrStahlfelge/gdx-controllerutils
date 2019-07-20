@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package android;
+package com.badlogic.gdx.controllers.android;
 
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -58,7 +58,7 @@ public class AndroidControllers implements LifecycleListener, ControllerManager,
 		// use InputManager on Android +4.1 to receive (dis-)connect events
 		if(Gdx.app.getVersion() >= 16) {
 			try {
-				String className = "com.badlogic.gdx.controllers.android.ControllerLifeCycleListener";
+				String className = "com.badlogic.gdx.controllers.ControllerLifeCycleListener";
 				Class.forName(className).getConstructor(AndroidControllers.class).newInstance(this);
 			} catch(Exception e) {
 				Gdx.app.log(TAG, "Couldn't register controller life-cycle listener");

@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package android;
+package com.badlogic.gdx.controllers.android;
 
 import android.content.Context;
 import android.hardware.input.InputManager;
