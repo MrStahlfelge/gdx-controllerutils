@@ -20,14 +20,16 @@ import android.view.InputDevice;
 import android.view.InputDevice.MotionRange;
 import android.view.MotionEvent;
 
-import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.AdvancedController;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntIntMap;
 
-public class AndroidController implements Controller {
+import java.util.UUID;
+
+public class AndroidController implements AdvancedController {
 	private final int deviceId;
 	private boolean attached;
 	private final String name;
@@ -37,10 +39,14 @@ public class AndroidController implements Controller {
 	protected int pov = 0;
 	private boolean povAxis;
 	private final Array<ControllerListener> listeners = new Array<ControllerListener>();
+	private String uuid;
+	public boolean connected;
 
 	public AndroidController(int deviceId, String name) {
 		this.deviceId = deviceId;
 		this.name = name;
+		this.uuid = UUID.randomUUID().toString();
+		this.connected = true;
 
 		InputDevice device = InputDevice.getDevice(deviceId);
 		int numAxes = 0;
@@ -156,5 +162,71 @@ public class AndroidController implements Controller {
 	@Override
 	public String getName () {
 		return name;
+	}
+
+	@Override
+	public boolean canVibrate() {
+		return false;
+	}
+
+	@Override
+	public boolean isVibrating() {
+		return false;
+	}
+
+	@Override
+	public void startVibration(float strength) {
+
+	}
+
+	@Override
+	public void stopVibration() {
+
+	}
+
+	@Override
+	public String getUniqueId() {
+		return uuid;
+	}
+
+	@Override
+	public boolean supportsPlayerIndex() {
+		return false;
+	}
+
+	@Override
+	public int getPlayerIndex() {
+		return AdvancedController.PLAYER_IDX_UNSET;
+	}
+
+	@Override
+	public void setPlayerIndex(int index) {
+
+	}
+
+	@Override
+	public int getMinButtonIndex() {
+		return 0;
+	}
+
+	@Override
+	public int getMaxButtonIndex() {
+		// see Android's KeyEvent class
+		return 300;
+	}
+
+	@Override
+	public int getAxisCount() {
+		return axes.length;
+	}
+
+	@Override
+	public int getPovCount() {
+		return hasPovAxis() ? 1 : 0;
+	}
+
+	@Override
+	public boolean isConnected() {
+		return connected;
 	}
 }
