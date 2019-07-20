@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2011 See AUTHORS file.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -58,7 +58,7 @@ public class AndroidControllers implements LifecycleListener, ControllerManager,
 		// use InputManager on Android +4.1 to receive (dis-)connect events
 		if(Gdx.app.getVersion() >= 16) {
 			try {
-				String className = "com.badlogic.gdx.controllers.ControllerLifeCycleListener";
+				String className = "com.badlogic.gdx.controllers.android.ControllerLifeCycleListener";
 				Class.forName(className).getConstructor(AndroidControllers.class).newInstance(this);
 			} catch(Exception e) {
 				Gdx.app.log(TAG, "Couldn't register controller life-cycle listener");
@@ -134,7 +134,7 @@ public class AndroidControllers implements LifecycleListener, ControllerManager,
 			}
 		}.run();
 	}
-	
+
 	@Override
 	public boolean onGenericMotion (View view, MotionEvent motionEvent) {
 		if((motionEvent.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) == 0) return false;

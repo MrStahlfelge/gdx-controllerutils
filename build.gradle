@@ -22,7 +22,7 @@ allprojects {
     apply plugin: "idea"
 
     ext {
-        minSdk = 15
+        minSdk = 16
         targetSdk = 25
         compileSdk = 25
         buildTools = '25.0.2'
