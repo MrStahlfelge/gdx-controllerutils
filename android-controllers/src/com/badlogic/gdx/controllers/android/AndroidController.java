@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 
 import com.badlogic.gdx.controllers.AdvancedController;
 import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -228,5 +229,10 @@ public class AndroidController implements AdvancedController {
 	@Override
 	public boolean isConnected() {
 		return connected;
+	}
+
+	@Override
+	public ControllerMapping getMapping() {
+		return AndroidControllerMapping.getInstance();
 	}
 }
