@@ -121,7 +121,7 @@ public class GwtController implements AdvancedController {
 
 	@Override
 	public boolean canVibrate() {
-		return false;
+		return Gamepad.getGamepad(index).canVibrate();
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class GwtController implements AdvancedController {
 
 	@Override
 	public void startVibration(int duration, float strength) {
-
+		Gamepad.getGamepad(index).doVibrate(duration, strength);
 	}
 
 	@Override
