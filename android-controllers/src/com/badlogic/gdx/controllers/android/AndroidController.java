@@ -16,6 +16,9 @@
 
 package com.badlogic.gdx.controllers.android;
 
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.InputDevice;
 import android.view.InputDevice.MotionRange;
 import android.view.MotionEvent;
@@ -27,6 +30,7 @@ import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntIntMap;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.UUID;
 
@@ -42,6 +46,9 @@ public class AndroidController implements AdvancedController {
 	private final Array<ControllerListener> listeners = new Array<ControllerListener>();
 	private String uuid;
 	public boolean connected;
+	private boolean hasVibrator;
+	private long vibrationEndMs;
+	private Vibrator vib;
 
 	public AndroidController(int deviceId, String name) {
 		this.deviceId = deviceId;
@@ -50,6 +57,13 @@ public class AndroidController implements AdvancedController {
 		this.connected = true;
 
 		InputDevice device = InputDevice.getDevice(deviceId);
+		if (Build.VERSION.SDK_INT >= 16) {
+			vib = device.getVibrator();
+			hasVibrator = vib != null && vib.hasVibrator();
+		} else {
+			hasVibrator = false;
+		}
+
 		int numAxes = 0;
 		for (MotionRange range : device.getMotionRanges()) {
 			if ((range.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
@@ -167,22 +181,32 @@ public class AndroidController implements AdvancedController {
 
 	@Override
 	public boolean canVibrate() {
-		return false;
+		return hasVibrator;
 	}
 
 	@Override
 	public boolean isVibrating() {
-		return false;
+		return hasVibrator && TimeUtils.millis() < vibrationEndMs;
 	}
 
 	@Override
 	public void startVibration(int duration, float strength) {
-
+		if (hasVibrator) {
+			if (Build.VERSION.SDK_INT >= 26) {
+				vib.vibrate(VibrationEffect.createOneShot(duration,
+						(int)(Math.min(1,Math.max(0,strength))*255)));
+			} else {
+				vib.vibrate(duration);
+			}
+			vibrationEndMs = TimeUtils.millis() + duration;
+		}
 	}
 
 	@Override
 	public void cancelVibration() {
-
+		if (isVibrating()) {
+			vib.cancel();
+		}
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import com.badlogic.gdx.controllers.gwt.support.Gamepad;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntFloatMap;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class GwtController implements AdvancedController {
 
@@ -37,6 +38,7 @@ public class GwtController implements AdvancedController {
 
 	private final Array<ControllerListener> listeners = new Array<ControllerListener>();
 	private final int buttonCount;
+	private long vibrationEndMs;
 
 	public GwtController(int index, String name) {
 		this.index = index;
@@ -126,12 +128,13 @@ public class GwtController implements AdvancedController {
 
 	@Override
 	public boolean isVibrating() {
-		return false;
+		return canVibrate() && TimeUtils.millis() < vibrationEndMs;
 	}
 
 	@Override
 	public void startVibration(int duration, float strength) {
 		Gamepad.getGamepad(index).doVibrate(duration, strength);
+		vibrationEndMs = TimeUtils.millis() + duration;
 	}
 
 	@Override

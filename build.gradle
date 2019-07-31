@@ -23,9 +23,9 @@ allprojects {
 
     ext {
         minSdk = 16
-        targetSdk = 25
-        compileSdk = 25
-        buildTools = '25.0.2'
+        targetSdk = 28
+        compileSdk = 28
+        buildTools = '28.0.3'
 
         appName = 'gdx-controllerutils'
         gdxVersion = '1.9.5'
