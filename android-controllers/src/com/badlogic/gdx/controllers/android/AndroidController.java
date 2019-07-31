@@ -176,12 +176,12 @@ public class AndroidController implements AdvancedController {
 	}
 
 	@Override
-	public void startVibration(float strength) {
+	public void startVibration(int duration, float strength) {
 
 	}
 
 	@Override
-	public void stopVibration() {
+	public void cancelVibration() {
 
 	}
 

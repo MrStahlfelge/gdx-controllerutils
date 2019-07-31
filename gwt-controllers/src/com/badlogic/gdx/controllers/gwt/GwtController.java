@@ -130,13 +130,13 @@ public class GwtController implements AdvancedController {
 	}
 
 	@Override
-	public void startVibration(float strength) {
-		// not supported
+	public void startVibration(int duration, float strength) {
+
 	}
 
 	@Override
-	public void stopVibration() {
-		// not supported
+	public void cancelVibration() {
+
 	}
 
 	@Override
