@@ -1,6 +1,6 @@
 # gdx-controllerutils
 
-Utilitys for using controllers with libGDX, and enhanced drop-in replacements for the official gdx-controllers extension
+Utilities for using controllers with libGDX, and enhanced drop-in replacements for the official gdx-controllers extension
 
 [![Build Status](https://travis-ci.org/MrStahlfelge/gdx-controllerutils.svg?branch=master)](https://travis-ci.org/MrStahlfelge/gdx-controllerutils)
 ![Maven Central](http://maven-badges.herokuapp.com/maven-central/de.golfgl.gdxcontrollerutils/gdx-controllerutils-mapping/badge.svg)
