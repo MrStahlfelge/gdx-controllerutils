@@ -2,6 +2,7 @@ package de.golfgl.gdx.controllers.mapping;
 
 import com.badlogic.gdx.controllers.AdvancedController;
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.JsonValue;
 
 import java.util.HashMap;
@@ -28,9 +29,10 @@ public class ControllerMappings {
     private boolean initialized;
     private int waitingForReverseButtonAxisId = -1;
     private int waitingForReverseButtonFirstIdx = -1;
+    private IntSet buttonsToIgnoreForRecord;
+    private IntSet axisToIgnoreForRecord;
 
-    public static int findHighAxisValue(Controller controller, float analogToDigitalTreshold,
-                                        float maxAcceptedAnalogValue) {
+    private int findHighAxisValue(Controller controller) {
         // Cycle through axis indexes to check if there is a high value
         float highestValue = 0;
         int axisWithHighestValue = -1;
@@ -39,7 +41,8 @@ public class ControllerMappings {
                 ((AdvancedController) controller).getAxisCount() - 1 : 500;
         for (int i = 0; i <= maxAxisIndex; i++) {
             float abs = Math.abs(controller.getAxis(i));
-            if (abs > highestValue && abs >= analogToDigitalTreshold && abs <= maxAcceptedAnalogValue) {
+            if (abs > highestValue && abs >= analogToDigitalTreshold && abs <= maxAcceptedAnalogValue
+              && (axisToIgnoreForRecord == null || !axisToIgnoreForRecord.contains(i))) {
                 highestValue = abs;
                 axisWithHighestValue = i;
             }
@@ -48,7 +51,7 @@ public class ControllerMappings {
         return axisWithHighestValue;
     }
 
-    public static int findPressedButton(Controller controller) {
+    private int findPressedButton(Controller controller) {
         // Cycle through button indexes to check if a button is pressed
         // Some gamepads report buttons from 90 to 107, so we check up to index 500
         // this should be moved into controller implementation which knows it better
@@ -58,7 +61,7 @@ public class ControllerMappings {
         final int maxButtonIndex = controller instanceof AdvancedController ?
                 ((AdvancedController) controller).getMaxButtonIndex() : 500;
         for (int i = minButtonIndex; i <= maxButtonIndex; i++)
-            if (controller.getButton(i))
+            if (controller.getButton(i) && (buttonsToIgnoreForRecord == null || !buttonsToIgnoreForRecord.contains(i)))
                 return i;
 
         return -1;
@@ -193,6 +196,31 @@ public class ControllerMappings {
 
         waitingForReverseButtonFirstIdx = -1;
         waitingForReverseButtonAxisId = -1;
+        buttonsToIgnoreForRecord = null;
+        axisToIgnoreForRecord = null;
+    }
+
+    /**
+     * Some Controllers might have buttons or axis that are broken and always report a value.
+     * Call this method before you begin to record mappings to ignore all those buttons and axis.
+     *
+     * @param controller controller to listen to
+     */
+    public void recordButtonsToIgnoreForMapping(Controller controller) {
+        buttonsToIgnoreForRecord = new IntSet();
+        axisToIgnoreForRecord = new IntSet();
+
+        int buttonFound = findPressedButton(controller);
+        while (buttonFound >= 0) {
+            buttonsToIgnoreForRecord.add(buttonFound);
+            buttonFound = findPressedButton(controller);
+        }
+
+        int axisFound = findHighAxisValue(controller);
+        while (axisFound >= 0) {
+            axisToIgnoreForRecord.add(axisFound);
+            axisFound = findHighAxisValue(controller);
+        }
     }
 
     /**
@@ -281,7 +309,7 @@ public class ControllerMappings {
 
                 // no break here on purpose!
             case axisAnalog:
-                int axisIndex = findHighAxisValue(controller, analogToDigitalTreshold, maxAcceptedAnalogValue);
+                int axisIndex = findHighAxisValue(controller);
 
                 if (axisIndex >= 0) {
                     boolean added = mappedInput.putMapping(new MappedInput(configuredInputId,
