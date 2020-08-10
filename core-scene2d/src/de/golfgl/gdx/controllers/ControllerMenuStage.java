@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -120,10 +121,16 @@ public class ControllerMenuStage extends Stage {
     }
 
     /**
-     * sets the currently focused actor
+     * Sets the currently focused actor. Use this to set the first focused actor after a screen
+     * change.
+     *
+     * Note that this method checks with {@link #isActorFocusable(Actor)}
+     * if the given actor can get the focus. If you use a Table layout, it is often needed to
+     * call {@link Table#validate()} on the root table for all Actors to layout before calling
+     * this method
      *
      * @param actor
-     * @return
+     * @return true if the actor is focused now
      */
     public boolean setFocusedActor(Actor actor) {
         if (focusedActor == actor)
