@@ -6,6 +6,16 @@ import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.controllers.PovDirection;
 
 /**
+ * This ControllerAdapter respects the mapping you instantiate it with.
+ * The mapping is mutable afterwards. This is important if the user rebinds the buttons.
+ * <p>
+ * For event based controller input, extend MappedControllerAdapter and add it as a listener to
+ * libGDX' Controller interface:
+ * <pre>
+ * Controllers.addListener(new MappedControllerAdapter(controllerMappings) {
+ *         //override configuredXXX() methods here...
+ *     });
+ * </pre>
  * Created by Benjamin Schulte on 05.11.2017.
  */
 public class MappedControllerAdapter extends ControllerAdapter {
@@ -36,7 +46,6 @@ public class MappedControllerAdapter extends ControllerAdapter {
     }
 
     public boolean configuredAxisMoved(Controller controller, int axisId, float value) {
-        System.out.println("Axis moved: " + controller.getName() + ":" + axisId + " " + String.valueOf(value));
         return false;
     }
 

@@ -4,6 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 
 /**
+ * Wraps libGDX controller and respects the mapping you instantiate it with.
+ * The mappings is mutable afterwards. This is important if the user rebinds the buttons while in
+ * game.
+ * <pre>
+ * MappedController mappedController = new MappedController(controller, controllerMappings);
+ * mappedController.isButtonPressed(BUTTON_JUMP);
+ * mappedController.getAxisValue(AXIS_HORIZONTAL);
+ * </pre>
  * Created by Benjamin Schulte on 05.11.2017.
  */
 
