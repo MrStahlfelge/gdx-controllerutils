@@ -29,6 +29,12 @@ android {
 
 }
 
+dependencies {
+	implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+	implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+	api project(":core-advcontrollers")
+}
+
 ext {
 	ARTIFACTID = 'gdx-controllers-android'
 }

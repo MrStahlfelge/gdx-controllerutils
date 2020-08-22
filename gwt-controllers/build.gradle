@@ -1,3 +1,28 @@
+apply plugin: 'java-library'
+
+
+apply from: '../publish.gradle'
+
+configurations {
+	custom
+	compile.extendsFrom custom
+}
+
+eclipse {
+	project {
+		name = appName + "-gwt-controllers"
+	}
+}
+
+dependencies {
+	api project(":core-advcontrollers")
+	implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+	implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+	implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+	implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+	implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion:sources"
+}
+
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 

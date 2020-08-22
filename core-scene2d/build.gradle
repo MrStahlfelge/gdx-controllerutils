@@ -1,4 +1,21 @@
-apply plugin : 'java'
+apply plugin : 'java-library'
+
+apply from: '../publish.gradle'
+
+configurations {
+	custom
+	compile.extendsFrom custom
+}
+
+eclipse {
+	project {
+		name = appName + "-core-scene2d"
+	}
+}
+
+dependencies {
+	api "com.badlogicgames.gdx:gdx:$gdxVersion"
+}
 
 targetCompatibility = 1.7
 sourceCompatibility = 1.7
