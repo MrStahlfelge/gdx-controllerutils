@@ -26,7 +26,6 @@ import android.view.View.OnKeyListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.backends.android.AndroidInput;
-import com.badlogic.gdx.backends.android.AndroidInputThreePlus;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.ControllerManager;
@@ -53,9 +52,9 @@ public class AndroidControllers implements LifecycleListener, ControllerManager,
 		Gdx.app.addLifecycleListener(this);
 		gatherControllers(false);
 		setupEventQueue();
-		((AndroidInput) Gdx.input).addKeyListener(this);
-		((AndroidInputThreePlus) Gdx.input).addGenericMotionListener(this);
-		
+		((AndroidInput)Gdx.input).addKeyListener(this);
+		((AndroidInput)Gdx.input).addGenericMotionListener(this);
+
 		// use InputManager on Android +4.1 to receive (dis-)connect events
 		if(Gdx.app.getVersion() >= 16) {
 			try {
@@ -191,7 +190,7 @@ public class AndroidControllers implements LifecycleListener, ControllerManager,
 
 	@Override
 	public boolean onKey (View view, int keyCode, KeyEvent keyEvent) {
-		if (ignoreNoGamepadButtons && !keyEvent.isGamepadButton(keyCode)) {
+		if (ignoreNoGamepadButtons && !KeyEvent.isGamepadButton(keyCode)) {
 			return false;
 		}
 		AndroidController controller = controllerMap.get(keyEvent.getDeviceId());
@@ -297,6 +296,8 @@ public class AndroidControllers implements LifecycleListener, ControllerManager,
 		} catch (RuntimeException e) {
 			// this exception is sometimes thrown by getDevice().
 			// we can't use this device anyway, so ignore it and move on
+			Gdx.app.error(TAG, "Could not get information about " + deviceId +
+							", ignoring the device.", e);
 		}
 	}
 	

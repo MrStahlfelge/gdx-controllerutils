@@ -27,7 +27,7 @@ allprojects {
         buildTools = '29.0.2'
 
         appName = 'gdx-controllerutils'
-        gdxVersion = '1.9.5'
+        gdxVersion = '1.9.11'
         roboVMVersion = '2.3.0'
     }
 
