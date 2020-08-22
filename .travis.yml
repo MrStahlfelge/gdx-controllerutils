@@ -1,4 +1,5 @@
 language: android
+warnings_are_errors: false
 
 android:
   components:
