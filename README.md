@@ -41,7 +41,9 @@ The official GWT implementation, but with enhancements, regular releases and bug
 [More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/GWT-controller-implementation)
 
 ### android-controllers
-The official Android implementation, but with enhancements, regular releases and bugfixes down to libGDX 1.9.5+.
+The official Android implementation, but with enhancements, regular releases and bugfixes down to libGDX 1.9.11.
+Sorry! Due to a breaking change in the android backend, our Android controllers implementation here is only compatible with 1.9.11 and up.
+You can use version 1.0.1 if you are on an older libGDX Version.
 
 [More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Android-controller-implementation)
 
