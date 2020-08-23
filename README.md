@@ -10,16 +10,6 @@ Utilities for using controllers with libGDX, and enhanced drop-in replacements f
 All subprojects are technically independant, you can use only one of them in your project. They are bundled in a single Github project because all have something to do with Game Controller Input and libGDX.
 
 
-### core-mapping
-Support configurable mappings for game controllers in your projects.
-
-[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Configurable-Game-Controller-Mappings)
-
-### core-scene2d
-Key and button supporting Stage with focusable Actors for Scene2d. This is also usable in games without Game Controller support.
-
-[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d)
-
 ### core-advcontrollers
 Advanced core interfaces giving you more control over connected controllers: Rumble, query available buttons and axis, query standard button constants, and more.
 
@@ -45,13 +35,24 @@ The official Android implementation, but with enhancements, regular releases and
 Sorry! Due to a breaking change in the android backend, our Android controllers implementation here is only compatible with 1.9.11 and up.
 You can use version 1.0.1 if you are on an older libGDX Version.
 
+### core-scene2d
+Key and button supporting Stage with focusable Actors for Scene2d. This is also usable in games without Game Controller support.
+
+[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d)
+
+### core-mapping
+Support configurable mappings for game controllers in your projects.
+
+[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Configurable-Game-Controller-Mappings)
+
 [More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Android-controller-implementation)
 
 ## Demos and examples
 
 core-scene2d is shown with sources in [raeleus' Shadow Walker UI demo](https://github.com/raeleus/Shadow-Walker-UI).
 
-See core-mapping and core-scene2d in action in my game [Falling Lightblocks Web/Android/FireTV](https://www.golfgl.de/lightblocks/). Take a look at the [SMC Platformer example project](https://github.com/MrStahlfelge/SMC-libgdx) for sources using core-mapping.
+All subprojects are used in my game [Falling Lightblocks Web/Android/iOS/FireTV](https://www.golfgl.de/lightblocks/).
+Take a look at the [sources](https://github.com/MrStahlfelge/lightblocks).
 
 ## Installation
 
@@ -59,8 +60,8 @@ This project is published to the Sonatype Maven repository. You can integrate th
 
 Define the version of this API right after the gdxVersion:
 
-    gdxVersion = '1.9.6' //or another gdx version you use
-    cuversion = '1.0.0'
+    gdxVersion = '1.9.11' //or another gdx version you use
+    cuversion = '2.0.0' // or 1.0.1 if you are on gdx <= 1.9.10
 
 Then add the needed dependencies to your project. You will find the artifact ids on the subproject's wiki sites.
 
