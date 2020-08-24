@@ -35,6 +35,8 @@ The official Android implementation, but with enhancements, regular releases and
 Sorry! Due to a breaking change in the android backend, our Android controllers implementation here is only compatible with 1.9.11 and up.
 You can use version 1.0.1 if you are on an older libGDX Version.
 
+[More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Android-controller-implementation)
+
 ### core-scene2d
 Key and button supporting Stage with focusable Actors for Scene2d. This is also usable in games without Game Controller support.
 
@@ -44,8 +46,6 @@ Key and button supporting Stage with focusable Actors for Scene2d. This is also 
 Support configurable mappings for game controllers in your projects.
 
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Configurable-Game-Controller-Mappings)
-
-[More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Android-controller-implementation)
 
 ## Demos and examples
 
