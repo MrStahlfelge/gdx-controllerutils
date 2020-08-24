@@ -2,7 +2,7 @@
 
 Utilities for using controllers with libGDX, and enhanced drop-in replacements for the official gdx-controllers extension
 
-[![Build Status](https://travis-ci.org/MrStahlfelge/gdx-controllerutils.svg?branch=master)](https://travis-ci.org/MrStahlfelge/gdx-controllerutils)
+![Compile and publish local](https://github.com/MrStahlfelge/gdx-controllerutils/workflows/Compile%20and%20publish%20local/badge.svg?branch=master&event=push)
 ![Maven Central](http://maven-badges.herokuapp.com/maven-central/de.golfgl.gdxcontrollerutils/gdx-controllerutils-mapping/badge.svg)
 
 ## Subprojects
