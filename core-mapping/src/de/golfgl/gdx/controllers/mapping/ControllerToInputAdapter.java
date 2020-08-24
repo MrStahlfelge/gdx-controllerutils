@@ -8,9 +8,17 @@ import java.util.HashMap;
 /**
  * This class adapts mapped controller keys to key events and sends to an targetInput processor.
  * <p>
- * It is a mapping after the mapping. :-D
+ * It is a controller-input-to-keyboard mapping after the mapping.
  * <p>
  * Use it when your game does not need analog input, but is just controlled via keyboard keys/dpad
+ * to enable controller support with nearly zero effort.
+ * <pre>
+ *     controllerToInputAdapter = new ControllerToInputAdapter(controllerMappings);
+ *     controllerToInputAdapter.addButtonMapping(BUTTON_JUMP, Input.Keys.SPACE);
+ *     controllerToInputAdapter.addAxisMapping(AXIS_HORIZONTAL, Input.Keys.LEFT, Input.Keys.RIGHT);
+ *     ...
+ *     controllerToInputAdapter.setInputProcessor(yourKeyInputProcessor);
+ * </pre>
  * <p>
  * Created by Benjamin Schulte on 06.11.2017.
  */
@@ -59,18 +67,18 @@ public class ControllerToInputAdapter extends MappedControllerAdapter {
 
         if (thisMapping.negativeKeyPressed != negativePressed) {
             if (negativePressed)
-                targetInput.keyDown(thisMapping.keyCodeNegative);
+                sendKeyDownToTarget(thisMapping.keyCodeNegative, controller);
             else
-                targetInput.keyUp(thisMapping.keyCodeNegative);
+                sendKeyUpToTarget(thisMapping.keyCodeNegative, controller);
 
             thisMapping.negativeKeyPressed = negativePressed;
         }
 
         if (thisMapping.positiveKeyPressed != positivePressed) {
             if (positivePressed)
-                targetInput.keyDown(thisMapping.keyCodePositive);
+                sendKeyDownToTarget(thisMapping.keyCodePositive, controller);
             else
-                targetInput.keyUp(thisMapping.keyCodePositive);
+                sendKeyUpToTarget(thisMapping.keyCodePositive, controller);
 
             thisMapping.positiveKeyPressed = positivePressed;
         }
@@ -83,7 +91,7 @@ public class ControllerToInputAdapter extends MappedControllerAdapter {
         if (targetInput == null || !buttonMappings.containsKey(buttonId))
             return false;
 
-        return targetInput.keyDown(buttonMappings.get(buttonId));
+        return sendKeyDownToTarget(buttonMappings.get(buttonId), controller);
     }
 
     @Override
@@ -91,7 +99,15 @@ public class ControllerToInputAdapter extends MappedControllerAdapter {
         if (targetInput == null || !buttonMappings.containsKey(buttonId))
             return false;
 
-        return targetInput.keyUp(buttonMappings.get(buttonId));
+        return sendKeyUpToTarget(buttonMappings.get(buttonId), controller);
+    }
+
+    protected boolean sendKeyDownToTarget(int keycode, Controller inputSourceController) {
+        return targetInput.keyDown(keycode);
+    }
+
+    protected boolean sendKeyUpToTarget(int keycode, Controller inputSourceController) {
+        return targetInput.keyUp(keycode);
     }
 
     /**
