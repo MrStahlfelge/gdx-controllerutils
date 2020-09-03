@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -233,6 +234,10 @@ public class ControllerMenuStage extends Stage {
             handled = moveFocusByDirection(MoveFocusDirection.west);
         else if (isGoRightKeyCode(keyCode))
             handled = moveFocusByDirection(MoveFocusDirection.east);
+        else if (isGoNextKeyCode(keyCode))
+            handled = moveFocusByList(true);
+        else if (isGoBackKeyCode(keyCode))
+            handled = moveFocusByList(false);
         else if (isDefaultActionKeyCode(keyCode)) {
             handled = triggerActionOnActor(true, focusedActor);
             isPressed = handled;
@@ -355,6 +360,14 @@ public class ControllerMenuStage extends Stage {
         return (keyCode == Input.Keys.DOWN);
     }
 
+    public boolean isGoNextKeyCode(int keyCode) {
+        return (keyCode == Input.Keys.TAB && !UIUtils.shift());
+    }
+
+    public boolean isGoBackKeyCode(int keyCode) {
+        return (keyCode == Input.Keys.TAB && UIUtils.shift());
+    }
+
     protected boolean fireEventOnActor(Actor actor, InputEvent.Type type, int pointer, Actor related) {
         if (actor == null || !isActorFocusable(actor) || !isActorHittable(actor))
             return false;
@@ -376,7 +389,48 @@ public class ControllerMenuStage extends Stage {
     }
 
     /**
-     * moves the focus in the given direction, is applicable
+     * moves the focus to next or previous focusable actor in list
+     *
+     * @param next true if this should go to next, or false to go back
+     * @return if an action was performed
+     */
+    protected boolean moveFocusByList(boolean next) {
+        if (focusedActor == null)
+            return false;
+
+        Actor nextActor = null;
+
+        // check if currently focused actor wants to determine the next Actor
+        if (focusedActor instanceof IControllerManageFocus) {
+            nextActor = ((IControllerManageFocus) focusedActor).getNextFocusableActor(next);
+        }
+
+        // otherwise, we use the next or previous Actor in our list
+        if (nextActor == null) {
+            int index = focusableActors.indexOf(focusedActor, true);
+
+            while (!next && index > 0 && nextActor == null) {
+                if (isActorFocusable(focusableActors.get(index - 1)))
+                    nextActor = focusableActors.get(index - 1);
+                index--;
+            }
+
+            while (next && index < focusableActors.size - 1 && nextActor == null) {
+                if (isActorFocusable(focusableActors.get(index + 1)))
+                    nextActor = focusableActors.get(index + 1);
+                index++;
+            }
+        }
+
+        if (nextActor != null) {
+            return setFocusedActor(nextActor);
+        }
+
+        return false;
+    }
+
+    /**
+     * moves the focus in the given direction, if applicable
      *
      * @param direction
      * @return true if an action was perforemd
@@ -385,13 +439,22 @@ public class ControllerMenuStage extends Stage {
         if (focusedActor == null)
             return false;
 
-        Actor nearestInDirection = findNearestFocusableNeighbour(direction);
+        Actor nextFocusedActor = null;
+
+        // check if currently focused actor wants to determine the next Actor
+        if (focusedActor instanceof IControllerManageFocus) {
+            nextFocusedActor = ((IControllerManageFocus) focusedActor).getNextFocusableActor(direction);
+        }
+
+        if (nextFocusedActor == null) {
+            nextFocusedActor = findNearestFocusableNeighbour(direction);
+        }
 
         // check for scrollable parents
-        boolean hasScrolled = checkForScrollable(direction, nearestInDirection);
+        boolean hasScrolled = checkForScrollable(direction, nextFocusedActor);
 
-        if (!hasScrolled && nearestInDirection != null)
-            return setFocusedActor(nearestInDirection);
+        if (!hasScrolled && nextFocusedActor != null)
+            return setFocusedActor(nextFocusedActor);
         else
             return hasScrolled;
     }
@@ -403,7 +466,7 @@ public class ControllerMenuStage extends Stage {
                         direction == MoveFocusDirection.north ? focusedActor.getHeight() :
                                 direction == MoveFocusDirection.south ? 0 : focusedActor.getHeight() / 2));
 
-        // in Frage kommende raussuchen
+        // check distance of every focusable actor in the direction
         Actor nearestInDirection = null;
         float distance = Float.MAX_VALUE;
 
