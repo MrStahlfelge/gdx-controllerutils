@@ -16,7 +16,8 @@ Advanced core interfaces giving you more control over connected controllers: Rum
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Advanced-Controller-interface)
 
 ### desktop-jamepad
-[Jamepad](https://github.com/williamahartman/Jamepad) implementation for libGDX' controller interfaces. Bring hotplugging to Lwjgl2 by just changing your gradle file!
+[Jamepad](https://github.com/MrStahlfelge/Jamepad) implementation for libGDX' controller interfaces. Bring hotplugging, vibration and controller-independant button codes
+ to your game by just changing your gradle file!
 
 [Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Jamepad-controller-implementation)
 
