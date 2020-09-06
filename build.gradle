@@ -50,13 +50,6 @@ allprojects {
 project(":jamepad-test-app") {
     apply plugin: 'java'
 
-    apply from: '../publish.gradle'
-
-    configurations {
-        custom
-        compile.extendsFrom custom
-    }
-
     eclipse {
         project {
             name = appName + "-jamepad-test-app"

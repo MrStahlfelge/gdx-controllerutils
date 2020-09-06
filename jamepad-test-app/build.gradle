@@ -1,6 +1,21 @@
 targetCompatibility = 1.7
 sourceCompatibility = 1.7
 
-ext {
-    ARTIFACTID = 'jamepad-test-app'
+project.ext.mainClassName = "de.golfgl.gdx.controllers.jamepad.JamepadTest"
+
+task run(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    ignoreExitValue = true
+}
+
+task dist(dependsOn: classes, type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
 }
