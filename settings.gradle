@@ -1,7 +1,2 @@
-include ':android-controllers', ':core-mapping'
+include ':core-mapping'
 include ':core-scene2d'
-include ':core-advcontrollers'
-include ':desktop-jamepad'
-include ':jamepad-test-app'
-include ':gwt-controllers'
-include ':ios-controllers'
