@@ -2,6 +2,7 @@ package de.golfgl.gdx.controllers.mapping;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 
@@ -65,22 +66,21 @@ public class ControllerToInputAdapter extends MappedControllerAdapter {
             positivePressed = false;
         }
 
-        if (thisMapping.negativeKeyPressed != negativePressed) {
+        boolean negativeChanged = thisMapping.setNegativeKeyPressed(controller, negativePressed);
+        boolean positiveChanged = thisMapping.setPositiveKeyPressed(controller, positivePressed);
+
+        if (negativeChanged) {
             if (negativePressed)
                 sendKeyDownToTarget(thisMapping.keyCodeNegative, controller);
             else
                 sendKeyUpToTarget(thisMapping.keyCodeNegative, controller);
-
-            thisMapping.negativeKeyPressed = negativePressed;
         }
 
-        if (thisMapping.positiveKeyPressed != positivePressed) {
+        if (positiveChanged) {
             if (positivePressed)
                 sendKeyDownToTarget(thisMapping.keyCodePositive, controller);
             else
                 sendKeyUpToTarget(thisMapping.keyCodePositive, controller);
-
-            thisMapping.positiveKeyPressed = positivePressed;
         }
 
         return true;
@@ -136,7 +136,32 @@ public class ControllerToInputAdapter extends MappedControllerAdapter {
     private static class AxisMapping {
         public int keyCodeNegative;
         public int keyCodePositive;
-        public boolean negativeKeyPressed;
-        public boolean positiveKeyPressed;
+
+        private Array<Controller> positivePressed = new Array<>(false,2);
+        private Array<Controller> negativePressed = new Array<>(false,2);
+
+        public boolean setNegativeKeyPressed(Controller controller, boolean negativePressed) {
+            if (negativePressed && !this.negativePressed.contains(controller, true)) {
+                this.negativePressed.add(controller);
+                return true;
+            } else if (!negativePressed && this.negativePressed.contains(controller, true)) {
+                this.negativePressed.removeValue(controller, true);
+                return true;
+            }
+
+            return false;
+        }
+
+        public boolean setPositiveKeyPressed(Controller controller, boolean positivePressed) {
+            if (positivePressed && !this.positivePressed.contains(controller, true)) {
+                this.positivePressed.add(controller);
+                return true;
+            } else if (!positivePressed && this.positivePressed.contains(controller, true)) {
+                this.positivePressed.removeValue(controller, true);
+                return true;
+            }
+
+            return false;
+        }
     }
 }
