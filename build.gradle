@@ -28,6 +28,7 @@ allprojects {
 
         appName = 'gdx-controllerutils'
         gdxVersion = '1.9.5'
+        gdxControllersVersion = '2.0.0-SNAPSHOT'
         // due to a breaking change in Android backend, android controllers depend on 1.9.11+
         androidGdxVersion = '1.9.11'
         roboVMVersion = '2.3.0'
@@ -45,22 +46,4 @@ allprojects {
 
     group = GROUPID
     version = VERSION
-}
-
-project(":jamepad-test-app") {
-    apply plugin: 'java'
-
-    eclipse {
-        project {
-            name = appName + "-jamepad-test-app"
-        }
-    }
-
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile project(":desktop-jamepad")
-    }
 }
