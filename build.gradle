@@ -8,11 +8,12 @@ buildscript {
     repositories {
         jcenter()
         google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'com.android.tools.build:gradle:3.2.0'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.0'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12-SNAPSHOT'
     }
 }
 
@@ -31,7 +32,7 @@ allprojects {
         gdxControllersVersion = '2.0.0-SNAPSHOT'
         // due to a breaking change in Android backend, android controllers depend on 1.9.11+
         androidGdxVersion = '1.9.11'
-        roboVMVersion = '2.3.0'
+        roboVMVersion = '2.3.12-SNAPSHOT'
     }
 
     repositories {
