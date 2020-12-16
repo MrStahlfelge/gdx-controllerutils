@@ -137,7 +137,7 @@ public class ControllerMenuStage extends Stage {
         if (focusedActor == actor)
             return true;
 
-        if (actor == null || !isActorFocusable(actor))
+        if (actor != null && !isActorFocusable(actor))
             return false;
 
         Actor oldFocused = focusedActor;
@@ -146,14 +146,16 @@ public class ControllerMenuStage extends Stage {
             onFocusLost(oldFocused, actor);
         }
 
-        // focusedActor kann durch onFocusLost->touchCancel verändert worden sein, dann nicht neu setzen
+        // focusedActor may be changed by onFocusLost->touchCancel, in that case don't reset
         if (focusedActor == null) {
             focusedActor = actor;
             if (focusedActor != null)
                 onFocusGained(focusedActor, oldFocused);
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public Actor getFocusedActor() {
