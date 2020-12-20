@@ -28,10 +28,8 @@ allprojects {
         buildTools = '29.0.3'
 
         appName = 'gdx-controllerutils'
-        gdxVersion = '1.9.5'
-        gdxControllersVersion = '2.0.0-SNAPSHOT'
-        // due to a breaking change in Android backend, android controllers depend on 1.9.11+
-        androidGdxVersion = '1.9.11'
+        gdxVersion = '1.9.11'
+        gdxControllersVersion = '2.0.0'
         roboVMVersion = '2.3.12-SNAPSHOT'
     }
 

@@ -1,7 +1,9 @@
 # gdx-controllerutils
 
-Utilities for using controllers with libGDX. The enhanced drop-in replacements for the official gdx-controllers extension are not needed any more. All features are included
-in [gdx-controllers v2](https://github.com/libgdx/gdx-controllers).
+Utilities for using controllers with libGDX.
+
+| :information_source: Note | The enhanced drop-in replacements for the official gdx-controllers extension are not needed any more. All features are included in [gdx-controllers v2](https://github.com/libgdx/gdx-controllers), usable with gdx 1.9.11+. If you still need to use an older gdx version, refer to [v2.2.1](https://github.com/MrStahlfelge/gdx-controllerutils/tree/2.2.1) |
+| --- | --- |
 
 ![Compile and publish local](https://github.com/MrStahlfelge/gdx-controllerutils/workflows/Compile%20and%20publish%20local/badge.svg?branch=master&event=push)
 ![Maven Central](http://maven-badges.herokuapp.com/maven-central/de.golfgl.gdxcontrollerutils/gdx-controllerutils-mapping/badge.svg)
