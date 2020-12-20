@@ -1,6 +1,9 @@
 # gdx-controllerutils
 
-Utilities for using controllers with libGDX, and enhanced drop-in replacements for the official gdx-controllers extension
+Utilities for using controllers with libGDX.
+
+| :information_source: Note | The enhanced drop-in replacements for the official gdx-controllers extension are not needed any more. All features are included in [gdx-controllers v2](https://github.com/libgdx/gdx-controllers), usable with gdx 1.9.11+. If you still need to use an older gdx version, refer to [v2.2.1](https://github.com/MrStahlfelge/gdx-controllerutils/tree/2.2.1) |
+| --- | --- |
 
 ![Compile and publish local](https://github.com/MrStahlfelge/gdx-controllerutils/workflows/Compile%20and%20publish%20local/badge.svg?branch=master&event=push)
 ![Maven Central](http://maven-badges.herokuapp.com/maven-central/de.golfgl.gdxcontrollerutils/gdx-controllerutils-mapping/badge.svg)
@@ -9,34 +12,6 @@ Utilities for using controllers with libGDX, and enhanced drop-in replacements f
 
 All subprojects are technically independant, you can use only one of them in your project. They are bundled in a single Github project because all have something to do with Game Controller Input and libGDX.
 
-
-### core-advcontrollers
-Advanced core interfaces giving you more control over connected controllers: Rumble, query available buttons and axis, query standard button constants, and more.
-
-[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Advanced-Controller-interface)
-
-### desktop-jamepad
-[Jamepad](https://github.com/MrStahlfelge/Jamepad) implementation for libGDX' controller interfaces. Bring hotplugging, vibration and controller-independant button codes
- to your game by just changing your gradle file!
-
-[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Jamepad-controller-implementation)
-
-### ios-controllers
-iOS controller implementation (MFI and iCade) for libGDX' controller interfaces.
-
-[Documentation](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/iOS-controller-implementation)
-
-### gwt-controllers
-The official GWT implementation, but with enhancements, regular releases and bugfixes down to libGDX 1.9.5+.
-
-[More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/GWT-controller-implementation)
-
-### android-controllers
-The official Android implementation, but with enhancements, regular releases and bugfixes down to libGDX 1.9.11.
-Sorry! Due to a breaking change in the android backend, our Android controllers implementation here is only compatible with 1.9.11 and up.
-You can use version 1.0.1 if you are on an older libGDX Version.
-
-[More info](https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Android-controller-implementation)
 
 ### core-scene2d
 Key and button supporting Stage with focusable Actors for Scene2d. This is also usable in games without Game Controller support.

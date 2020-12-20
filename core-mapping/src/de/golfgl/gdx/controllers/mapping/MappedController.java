@@ -110,31 +110,6 @@ public class MappedController {
         if (reverseButtonIndex >= 0 && controller.getButton(reverseButtonIndex))
             return -1f;
 
-        int povIdx = mappedInput.getPovIndex();
-        if (povIdx >= 0) {
-            boolean isVertical = mappedInput.getPovVertical();
-            switch (controller.getPov(povIdx)) {
-                case center:
-                    return 0;
-                case east:
-                    return (isVertical ? 0 : 1f);
-                case west:
-                    return (isVertical ? 0 : -1f);
-                case north:
-                    return (isVertical ? -1f : 0);
-                case south:
-                    return (isVertical ? 1f : 0);
-                case southEast:
-                    return 1f;
-                case southWest:
-                    return (isVertical ? 1f : -1f);
-                case northEast:
-                    return (isVertical ? -1f : 1f);
-                case northWest:
-                    return -1f;
-            }
-        }
-
         return 0;
     }
 

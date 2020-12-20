@@ -5,9 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.PovDirection;
+import com.badlogic.gdx.controllers.ControllerMapping;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 
@@ -135,7 +134,6 @@ public class ControllerMappingsTest {
         // now we connect a Controller... and map
         MockedController controller = new MockedController();
         controller.axisValues = new float[3];
-        controller.povDirection = PovDirection.center;
         controller.axisValues[0] = .2f;
         controller.axisValues[1] = .6f;
         controller.axisValues[2] = -.2f;
@@ -271,88 +269,6 @@ public class ControllerMappingsTest {
     }
 
     @Test
-    public void testPovToAxisMapping() {
-        ControllerMappings mappings = new ControllerMappings();
-
-        // We test 3 axis
-        ConfiguredInput axis1 = new ConfiguredInput(ConfiguredInput.Type.axis, 5);
-        ConfiguredInput axis2 = new ConfiguredInput(ConfiguredInput.Type.axisAnalog, 6);
-        ConfiguredInput axis3 = new ConfiguredInput(ConfiguredInput.Type.axisDigital, 7);
-
-        mappings.addConfiguredInput(axis1);
-        mappings.addConfiguredInput(axis2);
-        mappings.addConfiguredInput(axis3);
-
-        // ok, configuration done...
-        mappings.commitConfig();
-
-        // now we connect a Controller... and map
-        MockedController controller = new MockedController();
-        controller.axisValues = new float[3];
-        controller.povDirection = PovDirection.east;
-
-        assertEquals(ControllerMappings.RecordResult.recorded, mappings.recordMapping(controller, 5));
-        //next call too fast
-        assertEquals(ControllerMappings.RecordResult.not_added, mappings.recordMapping(controller, 7));
-        //not two directions
-        controller.povDirection = PovDirection.northWest;
-        assertEquals(ControllerMappings.RecordResult.not_added, mappings.recordMapping(controller, 7));
-
-        //not same direction on different configurations
-        controller.povDirection = PovDirection.west;
-        assertEquals(ControllerMappings.RecordResult.not_added, mappings.recordMapping(controller, 7));
-
-        //not for analog axis
-        controller.povDirection = PovDirection.north;
-        assertEquals(ControllerMappings.RecordResult.nothing_done, mappings.recordMapping(controller, 6));
-
-        assertEquals(ControllerMappings.RecordResult.recorded, mappings.recordMapping(controller, 7));
-
-        assertFalse(mappings.getControllerMapping(controller).checkCompleted());
-
-        System.out.println(mappings.toJson().toJson(JsonWriter.OutputType.json));
-
-        // now check
-        TestControllerAdapter controllerAdapter = new TestControllerAdapter(mappings);
-
-        assertFalse(controllerAdapter.povMoved(controller, 1, PovDirection.center));
-
-        // the digital
-        assertTrue(controllerAdapter.povMoved(controller, 0, PovDirection.center));
-        assertTrue(controllerAdapter.lastEventId == 5 || controllerAdapter.lastEventId == 7);
-
-        assertTrue(controllerAdapter.povMoved(controller, 0, PovDirection.east));
-        assertTrue(controllerAdapter.lastEventId == 5 || controllerAdapter.lastEventId == 7);
-
-        assertTrue(controllerAdapter.povMoved(controller, 0, PovDirection.southEast));
-        assertTrue(controllerAdapter.lastEventId == 5 || controllerAdapter.lastEventId == 7);
-
-        assertTrue(controllerAdapter.povMoved(controller, 0, PovDirection.west));
-        assertTrue(controllerAdapter.lastEventId == 5 || controllerAdapter.lastEventId == 7);
-
-        MappedController mappedController = new MappedController(controller, mappings);
-        controller.povDirection = PovDirection.center;
-        assertEquals(0, mappedController.getConfiguredAxisValue(5), .01f);
-        assertEquals(0, mappedController.getConfiguredAxisValue(6), .01f);
-        assertEquals(0, mappedController.getConfiguredAxisValue(7), .01f);
-
-        controller.povDirection = PovDirection.north;
-        assertEquals(0, mappedController.getConfiguredAxisValue(5), .01f);
-        assertEquals(0, mappedController.getConfiguredAxisValue(6), .01f);
-        assertEquals(-1, mappedController.getConfiguredAxisValue(7), .01f);
-
-        controller.povDirection = PovDirection.east;
-        assertEquals(1, mappedController.getConfiguredAxisValue(5), .01f);
-        assertEquals(0, mappedController.getConfiguredAxisValue(6), .01f);
-        assertEquals(0, mappedController.getConfiguredAxisValue(7), .01f);
-
-        controller.povDirection = PovDirection.southWest;
-        assertEquals(-1, mappedController.getConfiguredAxisValue(5), .01f);
-        assertEquals(0, mappedController.getConfiguredAxisValue(6), .01f);
-        assertEquals(1, mappedController.getConfiguredAxisValue(7), .01f);
-    }
-
-    @Test
     public void testDefaultMapping() {
         ControllerMappings mappings = new ControllerMappings() {
             @Override
@@ -406,7 +322,6 @@ public class ControllerMappingsTest {
         // now we connect a Controller... and map
         MockedController controller = new MockedController();
         controller.axisValues = new float[3];
-        controller.povDirection = PovDirection.center;
         controller.axisValues[0] = 1f;
         controller.pressedButton = -1;
         assertEquals(ControllerMappings.RecordResult.recorded, mappings.recordMapping(controller, 2));
@@ -416,9 +331,6 @@ public class ControllerMappingsTest {
         assertEquals(ControllerMappings.RecordResult.need_second_button, mappings.recordMapping(controller, 3));
         controller.pressedButton = 0;
         assertEquals(ControllerMappings.RecordResult.recorded, mappings.recordMapping(controller, 3));
-        controller.pressedButton = -1;
-        controller.povDirection = PovDirection.east;
-        assertEquals(ControllerMappings.RecordResult.recorded, mappings.recordMapping(controller, 4));
 
         JsonValue json = mappings.toJson();
         System.out.println(json.toJson(JsonWriter.OutputType.json));
@@ -426,19 +338,19 @@ public class ControllerMappingsTest {
         mappings.resetMappings(controller);
 
         mappedController.refreshMappingCache();
-        assertEquals(0, mappedController.getConfiguredAxisValue(4), 0.1f);
+        assertEquals(0, mappedController.getConfiguredAxisValue(2), 0.1f);
 
         mappings.fillFromJson(json);
         mappedController.refreshMappingCache();
 
-        assertEquals(1, mappedController.getConfiguredAxisValue(4), 0.1f);
+        assertEquals(1, mappedController.getConfiguredAxisValue(2), 0.1f);
         controller.pressedButton = 2;
         assertTrue(mappedController.isButtonPressed(1));
         controller.pressedButton = 1;
         assertEquals(1, mappedController.getConfiguredAxisValue(3), 0.1f);
     }
 
-    public class TestControllerAdapter extends MappedControllerAdapter {
+    public static class TestControllerAdapter extends MappedControllerAdapter {
         public int lastEventId = -1;
 
         public TestControllerAdapter(ControllerMappings mappings) {
@@ -460,11 +372,10 @@ public class ControllerMappingsTest {
         }
     }
 
-    public class MockedController implements Controller {
+    public static class MockedController implements Controller {
 
         public int pressedButton = -1;
         public float[] axisValues;
-        public PovDirection povDirection;
 
         @Override
         public boolean getButton(int buttonCode) {
@@ -479,33 +390,73 @@ public class ControllerMappingsTest {
         }
 
         @Override
-        public PovDirection getPov(int povCode) {
-            return (povCode != 0 ? PovDirection.center : povDirection);
+        public String getName() {
+            return "TEST";
         }
 
         @Override
-        public boolean getSliderX(int sliderCode) {
-            return false;
-        }
-
-        @Override
-        public boolean getSliderY(int sliderCode) {
-            return false;
-        }
-
-        @Override
-        public Vector3 getAccelerometer(int accelerometerCode) {
+        public String getUniqueId() {
             return null;
         }
 
         @Override
-        public void setAccelerometerSensitivity(float sensitivity) {
+        public int getMinButtonIndex() {
+            return 0;
+        }
+
+        @Override
+        public int getMaxButtonIndex() {
+            return 500;
+        }
+
+        @Override
+        public int getAxisCount() {
+            return 10;
+        }
+
+        @Override
+        public boolean isConnected() {
+            return false;
+        }
+
+        @Override
+        public boolean canVibrate() {
+            return false;
+        }
+
+        @Override
+        public boolean isVibrating() {
+            return false;
+        }
+
+        @Override
+        public void startVibration(int duration, float strength) {
 
         }
 
         @Override
-        public String getName() {
-            return "TEST";
+        public void cancelVibration() {
+
+        }
+
+        @Override
+        public boolean supportsPlayerIndex() {
+            return false;
+        }
+
+        @Override
+        public int getPlayerIndex() {
+            return 0;
+        }
+
+        @Override
+        public void setPlayerIndex(int index) {
+
+        }
+
+        @Override
+        public ControllerMapping getMapping() {
+            return null;
         }
 
         @Override
