@@ -37,7 +37,7 @@ This project is published to the Sonatype Maven repository. You can integrate th
 Define the version of this API right after the gdxVersion:
 
     gdxVersion = '1.9.11' //or another gdx version you use
-    cuversion = '2.2.0' // or 1.0.1 if you are on gdx <= 1.9.10
+    cuversion = '2.3.0' // or 1.0.1 if you are on gdx <= 1.9.10
 
 Then add the needed dependencies to your project. You will find the artifact ids on the subproject's wiki sites.
 
