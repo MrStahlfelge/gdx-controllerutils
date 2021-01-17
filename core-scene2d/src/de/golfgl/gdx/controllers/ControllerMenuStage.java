@@ -93,6 +93,15 @@ public class ControllerMenuStage extends Stage {
             addFocusableActor(actors.get(i));
     }
 
+    /**
+     * Clears all children, listeners, actions and focusable actors from the stage
+     */
+    @Override
+    public void clear() {
+        super.clear();
+        clearFocusableActors();
+    }
+
     public void clearFocusableActors() {
         setFocusedActor(null);
         focusableActors.clear();
