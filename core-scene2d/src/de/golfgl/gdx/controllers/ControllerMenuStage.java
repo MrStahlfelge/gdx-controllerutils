@@ -85,6 +85,8 @@ public class ControllerMenuStage extends Stage {
     }
 
     public void addFocusableActor(Actor actor) {
+        if (actor == null)
+            return;
         focusableActors.add(actor);
     }
 
@@ -112,7 +114,7 @@ public class ControllerMenuStage extends Stage {
      */
     public void removeFocusableActorsNotOnStage() {
         for (int i = focusableActors.size - 1; i >= 0; i--) {
-            if (focusableActors.get(i).getStage() != this)
+            if (focusableActors.get(i) == null || focusableActors.get(i).getStage() != this)
                 focusableActors.removeIndex(i);
         }
     }
@@ -205,6 +207,9 @@ public class ControllerMenuStage extends Stage {
      * @return true if focusable
      */
     protected boolean isActorFocusable(Actor actor) {
+        if (actor == null)
+            return false;
+
         if (!focusableActors.contains(actor, true))
             return false;
 
