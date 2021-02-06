@@ -4,37 +4,17 @@ ext {
 
 }
 
-buildscript {
-    repositories {
-        jcenter()
-        google()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    }
-    dependencies {
-        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:3.2.0'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12-SNAPSHOT'
-    }
-}
-
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
     ext {
-        minSdk = 16
-        targetSdk = 29
-        compileSdk = 29
-        buildTools = '29.0.3'
-
         appName = 'gdx-controllerutils'
         gdxVersion = '1.9.11'
         gdxControllersVersion = '2.0.0'
-        roboVMVersion = '2.3.12-SNAPSHOT'
     }
 
     repositories {
-        jcenter()
         google()
         mavenCentral()
         mavenLocal()
