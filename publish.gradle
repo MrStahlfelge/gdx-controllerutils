@@ -60,12 +60,12 @@ java {
 publishing {
     repositories {
         maven {
-            if (false && isLocalBuild()) {
+            if (isLocalBuild()) {
                 url = getLocalRepositoryUrl()
             } else {
                 if (isReleaseBuild()) {
                     url = getReleaseRepositoryUrl()
-                } else if (true || isSnapshotBuild()) {
+                } else if (isSnapshotBuild()) {
                     url = getSnapshotRepositoryUrl()
                 }
                 credentials {
