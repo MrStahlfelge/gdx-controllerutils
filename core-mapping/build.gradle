@@ -5,11 +5,6 @@ plugins {
 
 apply from: '../publish.gradle'
 
-configurations {
-	custom
-	compile.extendsFrom custom
-}
-
 eclipse {
 	project {
 		name = appName + "-core-mapping"
