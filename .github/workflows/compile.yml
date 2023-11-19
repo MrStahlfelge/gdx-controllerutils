@@ -23,4 +23,4 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Local install
-      run: ./gradlew clean uploadArchives -PSNAPSHOT=true -PLOCAL=true
+      run: ./gradlew clean publish -PSNAPSHOT=true -PLOCAL=true
