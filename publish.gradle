@@ -77,11 +77,12 @@ publishing {
     }
     publications {
         maven(MavenPublication) { publication ->
+            from(components.java)
+
             groupId = getGroupId()
             artifactId = getArtifactId()
             version = getVersion()
 
-            project.shadow.component(publication)
             pom {
                 name = 'gdx-controllerutils'
                 description = 'Game Controller Utilities for libGDX'
