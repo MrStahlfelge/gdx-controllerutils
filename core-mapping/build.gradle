@@ -13,12 +13,12 @@ eclipse {
 
 dependencies {
 	implementation "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 
 	testImplementation "junit:junit:4.12"
 	testImplementation "org.mockito:mockito-core:2.2.7"
 
 	testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-	testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 	testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 }
 
