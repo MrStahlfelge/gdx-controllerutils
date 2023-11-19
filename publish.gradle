@@ -1,4 +1,4 @@
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 def isLocalBuild() {
@@ -37,106 +37,85 @@ def getRepositoryPassword() {
 }
 
 def getGroupId() {
-    return GROUPID;
+    return GROUPID
 }
 
 def getArtifactId() {
-    return ARTIFACTID;
+    return ARTIFACTID
 }
 
 def getVersion() {
     if (isReleaseBuild()) {
         return VERSION.replace("-SNAPSHOT", "")
     } else {
-        return VERSION;
+        return VERSION
     }
 }
 
-afterEvaluate { project ->
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
-                pom.groupId = getGroupId()
-                pom.version = getVersion()
-				pom.artifactId = getArtifactId()
+publishing {
+    repositories {
+        maven {
+            if (isLocalBuild()) {
+                url = getLocalRepositoryUrl()
+            } else {
+                if (isReleaseBuild()) {
+                    url = getReleaseRepositoryUrl()
+                } else if (isSnapshotBuild()) {
+                    url = getSnapshotRepositoryUrl()
+                }
+                credentials {
+                    username = getRepositoryUsername()
+                    password = getRepositoryPassword()
+                }
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) { publication ->
+            from(components.java)
 
+            groupId = getGroupId()
+            artifactId = getArtifactId()
+            version = getVersion()
 
-                if (isLocalBuild()) {
-                    repository(url: getLocalRepositoryUrl())
-                } else {
-                    if (isReleaseBuild()) {
-                        repository(url: getReleaseRepositoryUrl()) {
-                            authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
-                        }
-                    }
-                    if (isSnapshotBuild()) {
-                        snapshotRepository(url: getSnapshotRepositoryUrl()) {
-                            authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
-                        }
+            pom {
+                name = 'gdx-controllerutils'
+                description = 'Game Controller Utilities for libGDX'
+                url = 'https://github.com/MrStahlfelge/gdx-controllerutils'
+
+                scm {
+                    url = 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
+                    connection = 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
+                    developerConnection = 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
+                }
+
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
                     }
                 }
 
-
-
-
-                pom.project {
-                    name 'gdx-controllerutils'
-                    description 'Game Controller Utilities for libGDX'
-                    url 'https://github.com/MrStahlfelge/gdx-controllerutils'
-
-                    scm {
-                        url 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
-                        connection 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
-                        developerConnection 'scm:git@github.com:MrStahlfelge/gdx-controllerutils.git'
-                    }
-
-                    licenses {
-                        license {
-                            name 'The Apache Software License, Version 2.0'
-                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                            distribution 'repo'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'MrStahlfelge'
-                            name 'Benjamin Schulte'
-                            email 'lightblocks@golfgl.de'
-                        }
+                developers {
+                    developer {
+                        id = 'MrStahlfelge'
+                        name = 'Benjamin Schulte'
+                        email = 'lightblocks@golfgl.de'
                     }
                 }
             }
         }
     }
+}
 
-    signing {
-        required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
-        sign configurations.archives
-    }
 
-    task libraryJar(type: Jar, dependsOn:classes) {
-        from sourceSets.main.output.classesDir
-        from configurations.custom.collect { it.isDirectory() ? it : zipTree(it) }
-        classifier = 'library'
-    }
-
-    task sourcesJar(type: Jar, dependsOn:classes) {
-        from sourceSets.main.allSource
-        classifier = 'sources'
-    }
-
-    task javadocJar(type: Jar, dependsOn:javadoc) {
-        from javadoc.destinationDir
-        classifier = 'javadoc'
-    }
-
-    artifacts {
-        archives libraryJar
-        archives sourcesJar
-        archives javadocJar
-    }
-
+signing {
+    required { isReleaseBuild() && gradle.taskGraph.hasTask("publish") }
+    sign publishing.publications.maven
 }

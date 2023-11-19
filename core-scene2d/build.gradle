@@ -1,11 +1,8 @@
-apply plugin : 'java-library'
+plugins {
+	id 'java-library'
+}
 
 apply from: '../publish.gradle'
-
-configurations {
-	custom
-	compile.extendsFrom custom
-}
 
 eclipse {
 	project {
@@ -29,4 +26,3 @@ sourceSets.test.java.srcDirs = [ "test/" ]
 ext {
 	ARTIFACTID = 'gdx-controllerutils-scene2d'
 }
-

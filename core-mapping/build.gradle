@@ -1,11 +1,8 @@
-apply plugin : 'java-library'
+plugins {
+	id 'java-library'
+}
 
 apply from: '../publish.gradle'
-
-configurations {
-	custom
-	compile.extendsFrom custom
-}
 
 eclipse {
 	project {
@@ -14,14 +11,14 @@ eclipse {
 }
 
 dependencies {
-	compile "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+	implementation "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 
-	testCompile "junit:junit:4.12"
-	testCompile "org.mockito:mockito-core:2.2.7"
+	testImplementation "junit:junit:4.12"
+	testImplementation "org.mockito:mockito-core:2.2.7"
 
-	testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-	testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
-	testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+	testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+	testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 }
 
 targetCompatibility = 1.7
@@ -36,4 +33,3 @@ sourceSets.test.java.srcDirs = [ "test/" ]
 ext {
 	ARTIFACTID = 'gdx-controllerutils-mapping'
 }
-
